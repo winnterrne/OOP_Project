@@ -6,6 +6,13 @@ public class QuanLi extends NhanVien {
     private String phongBan, chiNhanhQL;
     private double phuCapQL;
 
+    public String getPhongBan () {return phongBan;}
+    public void setPhongBan (String phongBan) {this.phongBan = phongBan;}
+    public String getChiNhanhQL () {return chiNhanhQL;}
+    public void setChiNhanhQL (String chiNhanhQL) {this.chiNhanhQL = chiNhanhQL;}
+    public double getPhuCapQL () {return phuCapQL;}
+    public void setPhuCapQL (double phuCapQL) {this.phuCapQL = phuCapQL;}
+
     public QuanLi (String maNV, String hoTen, String loaiCongViec, String cmnd, int soNgayNghi, int namVaoLam, double heSoLuong, String phongBan, String chiNhanhQL, double phuCapQL){
         super(hoTen, loaiCongViec, cmnd, soNgayNghi, namVaoLam, heSoLuong);
         if (maNV.startsWith("QL")) this.maNV = maNV;

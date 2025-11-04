@@ -7,7 +7,9 @@ public class NhanVienDungBep extends NhanVien {
     private String quayPhuTrach;
 
     public int getSoLuongOrder () {return soLuongOrder;}
+    public void setSoLuongOrder (int soLuongOrder) {this.soLuongOrder = soLuongOrder;}
     public String getQuayPhuTrach () {return quayPhuTrach;}
+    public void setQuayPhuTrach (String quayPhuTrach) {this.quayPhuTrach = quayPhuTrach;}
 
     public NhanVienDungBep (String maNV, String hoTen, String loaiCongViec, String cmnd, int soNgayNghi, int namVaoLam, double heSoLuong, int soLuongOrder, String quayPhuTrach){
         super(hoTen, loaiCongViec, cmnd, soNgayNghi, namVaoLam, heSoLuong);
