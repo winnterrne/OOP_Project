@@ -1,3 +1,4 @@
+
 package DichVu.QuanLi;
 
 abstract public class QuanLiChung {
@@ -6,3 +7,4 @@ abstract public class QuanLiChung {
     public abstract void sua(String id, Object newInfo);
     public abstract Object timKiem(String id);
 }
+

@@ -35,12 +35,18 @@ public class Combo extends SanPham implements KhuyenMai{
     }
 
     @Override
-    public double apDungKhuyenMai(double giaGoc) {
+    public double apDungKhuyenMai() {
+        double giaGoc = giaThanh;
         java.time.DayOfWeek ngay = java.time.LocalDate.now().getDayOfWeek();
         if(ngay == DayOfWeek.TUESDAY) {
             return giaGoc * 0.85;
         }
         return giaGoc;
+    }
+
+    @Override
+    public double tinhTien(int soLuong) {
+        return soLuong * giaThanh;
     }
 
     @Override
@@ -50,7 +56,7 @@ public class Combo extends SanPham implements KhuyenMai{
             System.out.println(" " + sp.getTenSanPham() + " " + sp.getGiaThanh());
         }
         double giaGoc = capNhatGiaThanh();
-        double giaSauKhuyenMai = apDungKhuyenMai(giaGoc);
+        double giaSauKhuyenMai = apDungKhuyenMai();
         System.out.println("Gia Goc: " + giaGoc);
         System.out.println("Gia Sau Khuyen Mai: " + giaSauKhuyenMai);
     }

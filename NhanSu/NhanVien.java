@@ -7,15 +7,20 @@ abstract public class NhanVien implements PhuCapThamNien {
     protected static final int luongCoBan = 4000000;
 
     public String getMaNV () {return maNV;}
-    public String getHoTen () {return hoTen;}
-    public String getLoaiCongViec () {return loaiCongViec;}
-    public String getCmnd () {return cmnd;}
-    public int getSoNgayNghi () {return soNgayNghi;}
-    public int getNamVaoLam () {return namVaoLam;}
     public void setMaNV (String maNV) {this.maNV = maNV;}
+    public String getHoTen () {return hoTen;}
     public void setHoTen (String hoTen) {this.hoTen = hoTen;}
-    public void setLoaiCongViec(String loaiCongViec){this.loaiCongViec = loaiCongViec;}
-    public void setCmnd(String cmnd) {this.cmnd = cmnd;}
+    public String getLoaiCongViec () {return loaiCongViec;}
+
+    public String getCmnd () {return cmnd;}
+    public void setLoaiCongViec (String loaiCongViec) {this.loaiCongViec = loaiCongViec;}
+    public void setCmnd (String cmnd) {this.cmnd = cmnd;}
+    public int getSoNgayNghi () {return soNgayNghi;}
+    public void setSoNgayNghi (int soNgayNghi) {this.soNgayNghi = soNgayNghi;}
+    public int getNamVaoLam () {return namVaoLam;}
+
+    public void setNamVaoLam (int namVaoLam) {this.namVaoLam = namVaoLam;}
+
     abstract public char xepLoai();
     abstract public double tinhLuong();
 
