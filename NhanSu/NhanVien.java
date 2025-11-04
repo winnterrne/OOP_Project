@@ -9,10 +9,13 @@ abstract public class NhanVien implements PhuCapThamNien {
     public String getMaNV () {return maNV;}
     public String getHoTen () {return hoTen;}
     public String getLoaiCongViec () {return loaiCongViec;}
-    public String cmnd () {return cmnd;}
+    public String getCmnd () {return cmnd;}
     public int getSoNgayNghi () {return soNgayNghi;}
     public int getNamVaoLam () {return namVaoLam;}
-
+    public void setMaNV (String maNV) {this.maNV = maNV;}
+    public void setHoTen (String hoTen) {this.hoTen = hoTen;}
+    public void setLoaiCongViec(String loaiCongViec){this.loaiCongViec = loaiCongViec;}
+    public void setCmnd(String cmnd) {this.cmnd = cmnd;}
     abstract public char xepLoai();
     abstract public double tinhLuong();
 
