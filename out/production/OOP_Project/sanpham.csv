@@ -1,0 +1,7 @@
+Loai,MaSP,TenSP,SoLuong,GiaThanh,ThuocTinh1,ThuocTinh2,ThuocTinh3
+DOUONG,DU01,Coca,10,15000,chai,330,
+DOUONG,DU02,Pepsi,15,14000,lon,500,
+THUCAN,TA01,Ga Ran,5,45000,ga tuoi,15,CHIEN
+THUCAN,TA02,Bun Bo,3,50000,bo,20,HAP
+COMBO,CB01,Combo 2 nguoi,1,0,2,2,
+COMBO,CB02,Combo 4 nguoi,1,0,4,4,

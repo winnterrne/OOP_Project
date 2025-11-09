@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="07a4f4ff-ff13-4f83-ac60-b1b624dd4c3c" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="32EUdCG6CWfW5QHqlnDCULVHjgs" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.BaiTap4.executor": "Run",
+    "Application.BaiTap4k.executor": "Run",
+    "Application.BaiTap4l.executor": "Run",
+    "Application.BaiTap4m.executor": "Run",
+    "Application.BaiTap4o.executor": "Run",
+    "Application.BaiTap4p.executor": "Run",
+    "Application.Baitap1.executor": "Run",
+    "Application.Baitap2.executor": "Run",
+    "Application.Baitap2e.executor": "Run",
+    "Application.Baitap2f.executor": "Run",
+    "Application.Baitap3.executor": "Run",
+    "Application.Baitap3g.executor": "Run",
+    "Application.Baitap4.executor": "Run",
+    "Application.Baitap5.executor": "Run",
+    "Application.Baitap7.executor": "Run",
+    "Application.Baitap8.executor": "Run",
+    "Application.Baitap9.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.Vidu2.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "kotlin-language-version-configured": "true",
+    "onboarding.tips.debug.path": "C:/Users/Tran Duc/Documents/OOP_Java/Java/src/Main.java"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="07a4f4ff-ff13-4f83-ac60-b1b624dd4c3c" name="Changes" comment="" />
+      <created>1756985311222</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1756985311222</updated>
+    </task>
+    <servers />
+  </component>
+</project>
