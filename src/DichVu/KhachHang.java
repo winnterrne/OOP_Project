@@ -1,7 +1,7 @@
 package DichVu;
 
 public class KhachHang {
-    private HoaDon hoadon;
+    private DichVu.HoaDon hoadon;
     private String maKH, tenKH, diaChi;
     private int soDienThoai;
 

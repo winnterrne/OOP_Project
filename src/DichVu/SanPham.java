@@ -44,4 +44,7 @@ abstract public class SanPham {
         return soLuong * giaThanh;
     }
     abstract public void xuatSanPham();
+    public String toCSV() {
+        return maSanPham + "," + tenSanPham + "," + soLuong + "," + giaThanh;
+    }
 }

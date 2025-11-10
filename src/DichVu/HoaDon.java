@@ -15,8 +15,8 @@ public class HoaDon implements KhuyenMai{
     }
     public HoaDon(String maHoaDon, String maVanChuyen, String ngayXuatHoaDon) {
         this.maHoaDon = maHoaDon;
-        this.ngayXuatHoaDon = ngayXuatHoaDon;
         this.maVanChuyen = maVanChuyen;
+        this.ngayXuatHoaDon = ngayXuatHoaDon;
     }
 
     public void themDonHang(DonHang donHang) {
@@ -35,10 +35,10 @@ public class HoaDon implements KhuyenMai{
     public void setMaVanChuyen(String maVanChuyen) {
         this.maVanChuyen = maVanChuyen;
     }
-    public String getNgayXuatHoaDon () {
+    public String getNgayXuatHoaDon() {
         return ngayXuatHoaDon;
     }
-    public void setNgayXuatHoaDon (String ngayXuatHoaDon) {
+    public void setNgayXuatHoaDon(String ngayXuatHoaDon) {
         this.ngayXuatHoaDon = ngayXuatHoaDon;
     }
     public double tinhTongTien() {
@@ -51,11 +51,12 @@ public class HoaDon implements KhuyenMai{
 
     @Override
     public double apDungKhuyenMai() {
+        double giaGoc = 0;
         java.time.DayOfWeek ngay = java.time.LocalDate.now().getDayOfWeek();
         if(ngay == DayOfWeek.TUESDAY) {
-            return 0.85;
+            return giaGoc * 0.85;
         }
-        return 1.0;
+        return giaGoc;
     }
     public double tongTienSauKhuyenMai() {
         return apDungKhuyenMai() * tinhTongTien();
@@ -70,5 +71,9 @@ public class HoaDon implements KhuyenMai{
         System.out.println();
         System.out.println("Tong Hoa Don: " + tongTienSauKhuyenMai());
         System.out.println("===================");
+    }
+
+    public List<DonHang> getDsDonHang() {
+        return dsDonHang;
     }
 }

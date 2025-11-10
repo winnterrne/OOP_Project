@@ -2,9 +2,6 @@ package QuanLi;
 
 import DichVu.*;
 
-
-import NhanSu.NhanVien;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +23,7 @@ public class QuanLiSanPham extends QuanLiChung {
         for (SanPham sp : dsSanPham) {
             sp.xuatSanPham();
         }
+        System.out.println("Tổng số sản phẩm: " + tongSoSP);
     }
 
     @Override

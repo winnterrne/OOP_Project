@@ -4,59 +4,51 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Combo extends SanPham implements KhuyenMai {
-    protected int soLuongMon;
-    protected int luongNguoiAn;
+public class Combo extends SanPham implements KhuyenMai{
+    public int soLuongMon;
+    public int luongNguoiAn;
     protected List<SanPham> dsSanPham = new ArrayList<>();
 
-    // ===== GETTERS & SETTERS =====
+    public Combo() {
+
+    }
+    public Combo(String maSanPham, String tenSanPham, int soLuong, double giaThanh,int soLuongMon, int luongNguoiAn) {
+        super(maSanPham, tenSanPham, soLuong, giaThanh);
+        this.soLuongMon = soLuongMon;
+        this.luongNguoiAn = luongNguoiAn;
+    }
+
     public int getSoLuongMon() {
         return soLuongMon;
     }
-
     public void setSoLuongMon(int soLuongMon) {
         this.soLuongMon = soLuongMon;
     }
-
     public int getLuongNguoiAn() {
         return luongNguoiAn;
     }
-
     public void setLuongNguoiAn(int luongNguoiAn) {
         this.luongNguoiAn = luongNguoiAn;
     }
 
-    public List<SanPham> getDsSanPham() {
-        return dsSanPham;
-    }
 
-    public void setDsSanPham(List<SanPham> dsSanPham) {
-        if (dsSanPham != null) {
-            this.dsSanPham = dsSanPham;
-            capNhatGiaThanh(); // cap nhat gia thanh khi set danh sach moi
-        }
-    }
-
-    // ===== CAC PHUONG THUC HIEN CO =====
     public void themMon(SanPham sp) {
         dsSanPham.add(sp);
         capNhatGiaThanh();
-        System.out.println("Da them mon: " + sp.getTenSanPham());
+        System.out.println("Da them mon" + sp.getTenSanPham());
     }
-
     public void xoaMon(String tenMon) {
         boolean xoa = dsSanPham.removeIf(sp -> sp.getTenSanPham().equalsIgnoreCase(tenMon));
-        if (xoa) {
+        if(xoa) {
             capNhatGiaThanh();
             System.out.println("Da xoa mon " + tenMon);
-        } else {
-            System.out.println("Khong co mon " + tenMon);
+        }else {
+            System.out.println("Khong co mon ");
         }
     }
-
     public double capNhatGiaThanh() {
         double tong = 0;
-        for (SanPham sp : dsSanPham) {
+        for(SanPham sp : dsSanPham) {
             tong += sp.getGiaThanh();
         }
         super.setGiaThanh(tong);
@@ -66,8 +58,8 @@ public class Combo extends SanPham implements KhuyenMai {
     @Override
     public double apDungKhuyenMai() {
         double giaGoc = giaThanh;
-        DayOfWeek ngay = java.time.LocalDate.now().getDayOfWeek();
-        if (ngay == DayOfWeek.TUESDAY) {
+        java.time.DayOfWeek ngay = java.time.LocalDate.now().getDayOfWeek();
+        if(ngay == DayOfWeek.TUESDAY) {
             return giaGoc * 0.85;
         }
         return giaGoc;
@@ -79,9 +71,14 @@ public class Combo extends SanPham implements KhuyenMai {
     }
 
     @Override
+    public String toCSV() {
+        return "Combo: " + super.toCSV() + "," + soLuongMon + "," + luongNguoiAn;
+    }
+
+    @Override
     public void xuatSanPham() {
         System.out.println("Combo: " + luongNguoiAn + " nguoi gom: ");
-        for (SanPham sp : dsSanPham) {
+        for(SanPham sp : dsSanPham) {
             System.out.println(" " + sp.getTenSanPham() + " " + sp.getGiaThanh());
         }
         double giaGoc = capNhatGiaThanh();
