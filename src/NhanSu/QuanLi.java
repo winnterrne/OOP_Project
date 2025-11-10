@@ -15,8 +15,7 @@ public class QuanLi extends NhanVien {
 
     public QuanLi (String maNV, String hoTen, String loaiCongViec, String cmnd, int soNgayNghi, int namVaoLam, double heSoLuong, String phongBan, String chiNhanhQL, double phuCapQL){
         super(hoTen, loaiCongViec, cmnd, soNgayNghi, namVaoLam, heSoLuong);
-        if (maNV.startsWith("QL")) this.maNV = maNV;
-        else maNV = "QL" + maNV.substring(2);
+        this.maNV = maNV;
         this.phongBan = phongBan;
         this.chiNhanhQL = chiNhanhQL;
         this.phuCapQL = phuCapQL;
@@ -60,6 +59,6 @@ public class QuanLi extends NhanVien {
         return "Danh gia cua quan ly: " + ketqua;
     }
     public String toCSV() {
-        return "QuanLi, " + super.toCSV() + "," + phongBan + "," + chiNhanhQL + "," +phuCapQL;
+        return "QuanLi," + super.toCSV() + "," + phongBan + "," + chiNhanhQL + "," +phuCapQL;
     }
 }

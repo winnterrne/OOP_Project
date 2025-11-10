@@ -203,29 +203,29 @@ public class QuanLiSanPham extends QuanLiChung {
 					System.out.print("Moi chon: ");
                     int loai = Integer.parseInt(sc.nextLine());
 
-                    System.out.println("Ma San Pham: ");
+                    System.out.print("Ma San Pham: ");
                     String maSanPham = sc.nextLine();
-                    System.out.println("Ten San Pham: ");
+                    System.out.print("Ten San Pham: ");
                     String tenSanPham = sc.nextLine();
-                    System.out.println("So Luong: ");
+                    System.out.print("So Luong: ");
                     int soLuong = Integer.parseInt(sc.nextLine());
-                    System.out.println("Gia Thanh: ");
+                    System.out.print("Gia Thanh: ");
                     double giaThanh = Double.parseDouble(sc.nextLine());
 
                     if(loai == 1) {
-                        System.out.println("Don vi tinh: ");
+                        System.out.print("Don vi tinh: ");
                         String donViTinh = sc.nextLine();
-                        System.out.println("Dung tich: ");
+                        System.out.print("Dung tich: ");
                         double dungTich = Double.parseDouble(sc.nextLine());
                         DoUong doUong = new DoUong(maSanPham, tenSanPham, soLuong, giaThanh, donViTinh, dungTich);
                         them(doUong);
                     }
                     if (loai == 2) {
-                        System.out.println("Nguyen lieu: ");
+                        System.out.print("Nguyen lieu: ");
                         String nguyenLieu = sc.nextLine();
-                        System.out.println("Thoi gian chuan bi: ");
+                        System.out.print("Thoi gian chuan bi: ");
                         int thoiGianChuanBi = Integer.parseInt(sc.nextLine());
-                        System.out.println("Loai (CHIEN / XAO / HAP/ NUONG / NAU)");
+                        System.out.print("Loai (CHIEN / XAO / HAP/ NUONG / NAU)");
                         String l = sc.nextLine();
 
                         ThucAn thucAn = new ThucAn(maSanPham, tenSanPham, soLuong, giaThanh, nguyenLieu, thoiGianChuanBi);
@@ -233,9 +233,9 @@ public class QuanLiSanPham extends QuanLiChung {
                         them(thucAn);
                     }
                     if (loai == 3) {
-                        System.out.println("So Luong Mon: ");
+                        System.out.print("So Luong Mon: ");
                         int soLuongMon = Integer.parseInt(sc.nextLine());
-                        System.out.println("So Luong Nguoi An: ");
+                        System.out.print("So Luong Nguoi An: ");
                         int soLuongNguoiAn = Integer.parseInt(sc.nextLine());
                         Combo combo = new Combo();
                         combo.setMaSanPham(maSanPham);
@@ -260,6 +260,7 @@ public class QuanLiSanPham extends QuanLiChung {
 					System.out.println("1. Do Uong ");
                     System.out.println("2. Thuc An ");
                     System.out.println("3. Combo ");
+                    System.out.print("Nhập loại cần sửa");
                     int loai = Integer.parseInt(sc.nextLine());
 					System.out.print ("Nhập mã sản phẩm cần sửa: ");
 					String ma = sc.nextLine();
@@ -316,16 +317,15 @@ public class QuanLiSanPham extends QuanLiChung {
 				}
 				
                 case 4 -> {
-                    sc.nextLine();
-                    System.out.println("Tim Kiem San Pham: ");
+                    System.out.print("Nhập mã sản phẩm cần tìm: ");
                     String maSanPham = sc.nextLine();
                     SanPham sp = (SanPham) timKiem(maSanPham);
 
                     if(sp != null) {
-                        System.out.println("Da Tim Thay San Pham: ");
+                        System.out.println("Đã tìm thấy sản phẩm: ");
                         sp.xuatSanPham();
                     }else {
-                        System.out.println("Khong Tim Thay San Pham" + maSanPham);
+                        System.out.println("Không tìm thấy sản phẩm " + maSanPham);
                     }
 					break;
                 }

@@ -10,10 +10,10 @@ public class NhanVienBanHang extends NhanVien {
     public double getDoanhThuToiThieu () {return doanhThuToiThieu;}
     public void setDoanhThuToiThieu (double doanhThuToiThieu) {this.doanhThuToiThieu = doanhThuToiThieu;}
 
-    public NhanVienBanHang (String maNV, String hoTen, String loaiCongViec, String cmnd, int soNgayNghi, int thamNien, double doanhThu, double doanhThuToiThieu, double heSoLuong){
+    public NhanVienBanHang (String maNV, String hoTen, String loaiCongViec, String cmnd, 
+                       int soNgayNghi, int thamNien, double doanhThu, double doanhThuToiThieu, double heSoLuong){
         super(hoTen, loaiCongViec, cmnd, soNgayNghi, thamNien, heSoLuong);
-        if (maNV.startsWith("BH")) this.maNV = maNV;
-        else this.maNV = "BH" + maNV.substring(2);
+        this.maNV = maNV;  // CHỈ GÁN THẲNG, KHÔNG ÉP GÌ HẾT!!!
         this.doanhThu = doanhThu;
         this.doanhThuToiThieu = doanhThuToiThieu;
     }
@@ -42,7 +42,7 @@ public class NhanVienBanHang extends NhanVien {
     }
 
     public String toCSV() {
-        return "NhanVienBanHang, " + super.toCSV() + "," + doanhThu + "," + doanhThuToiThieu;
+        return "NhanVienBanHang," + super.toCSV() + "," + doanhThu + "," + doanhThuToiThieu;
     }
 
     @Override

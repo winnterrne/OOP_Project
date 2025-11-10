@@ -1,11 +1,11 @@
-import DichVu.*;
-import NhanSu.*;
+
 import QuanLi.*;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        System.setProperty("file.encoding", "UTF-8");
         Scanner sc = new Scanner(System.in);
         QuanLiSanPham quanLiSanPham = new QuanLiSanPham();
         QuanLiNhanVien quanLiNhanVien = new QuanLiNhanVien();
@@ -35,6 +35,7 @@ public class Main {
                 default -> System.out.println("Lua Chon Khong Hop Le");
             }
         }while (choice != 0);
-
+        
+        sc.close();
     }
 }

@@ -4,5 +4,6 @@ Combo, CB02,Combo 4 nguoi,1,0.0,4,4
 DoUong, DU01,Coca,10,15000.0,chai,330.0
 DoUong, DU02,Pepsi,15,14000.0,lon,500.0
 DoUong, DU03,7Up,20,13000.0,lon,500.0
+DoUong, DU04,Fanta,15,15000.0,lon,375.0
 ThucAn, TA01,Ga Ran,5,45000.0,ga tuoi,15
 ThucAn, TA02,Bun Bo,3,50000.0,bo,20

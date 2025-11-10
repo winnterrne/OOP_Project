@@ -67,7 +67,6 @@ public class QuanLiNhanVien extends QuanLiChung {
     public void sapXepNVTheoMa() {
         dsNhanVien.sort(Comparator.comparing(NhanVien::getMaNV));
         System.out.println("Đã sắp xếp nhân viên theo mã nhân viên");
-        ghiFile(TEN_FILE);
     }
 
     public void hienThi() {
@@ -95,28 +94,29 @@ public class QuanLiNhanVien extends QuanLiChung {
                 String[] arr = dong.split(",");
                 if (arr.length < 7) continue;
 
-                String maNV = arr[0];
-                String hoTen = arr[1];
-                String loaiCV = arr[2];
-                String cmnd = arr[3];
-                int ngayNghi = Integer.parseInt(arr[4]);
-                int namVaoLam = Integer.parseInt(arr[5]);
-                double heSoLuong = Double.parseDouble(arr[6]);
+                String loai = arr[0];
+                String maNV = arr[1];
+                String hoTen = arr[2];
+                String loaiCV = arr[3];
+                String cmnd = arr[4];
+                int ngayNghi = Integer.parseInt(arr[5]);
+                int namVaoLam = Integer.parseInt(arr[6]);
+                double heSoLuong = Double.parseDouble(arr[7]);
 
                 NhanVien nv = null;
                 // Dựa theo loaiCV để xác định đúng lớp con
                 if (loaiCV.equalsIgnoreCase("Ban hang") || loaiCV.equalsIgnoreCase("NhanVienBanHang")) {
-                    double doanhThu = Double.parseDouble(arr[7]);
-                    double doanhThuMin = Double.parseDouble(arr[8]);
+                    double doanhThu = Double.parseDouble(arr[8]);
+                    double doanhThuMin = Double.parseDouble(arr[9]);
                     nv = new NhanVienBanHang(maNV, hoTen, loaiCV, cmnd, ngayNghi, namVaoLam, doanhThu, doanhThuMin, heSoLuong);
                 } else if (loaiCV.equalsIgnoreCase("Dung bep") || loaiCV.equalsIgnoreCase("NhanVienDungBep")) {
-                    int soLuongOrder = Integer.parseInt(arr[7]);
-                    String quayPhuTrach = arr[8];
+                    int soLuongOrder = Integer.parseInt(arr[8]);
+                    String quayPhuTrach = arr[9];
                     nv = new NhanVienDungBep(maNV, hoTen, loaiCV, cmnd, ngayNghi, namVaoLam, heSoLuong, soLuongOrder, quayPhuTrach);
                 } else if (loaiCV.equalsIgnoreCase("Quan li") || loaiCV.equalsIgnoreCase("QuanLi")) {
-                    String phongBan = arr[7];
-                    String chiNhanhQL = arr[8];
-                    double phuCapQL = Double.parseDouble(arr[9]);
+                    String phongBan = arr[8];
+                    String chiNhanhQL = arr[9];
+                    double phuCapQL = Double.parseDouble(arr[10]);
                     nv = new QuanLi(maNV, hoTen, loaiCV, cmnd, ngayNghi, namVaoLam, heSoLuong, phongBan, chiNhanhQL, phuCapQL);
                 }
 
@@ -160,8 +160,6 @@ public class QuanLiNhanVien extends QuanLiChung {
             System.out.println("4. Tim kiem nhan vien");
             System.out.println("5. Sap xep nhan vien theo luong");
             System.out.println("6. Hien thi danh sach nhan vien");
-            System.out.println("7. Doc danh sach nhan vien tu file");
-            System.out.println("8. Ghi danh sach nhan vien ra file");
             System.out.println("0. Thoat");
             System.out.print("Nhap lua chon: ");
             choice = sc.nextInt();
@@ -175,10 +173,9 @@ public class QuanLiNhanVien extends QuanLiChung {
                 case 5 -> {
                     sapXepNVTheoMa();
                     System.out.println("Da sap xep nhan vien theo ma!");
+                    ghiFile(TEN_FILE);
                 }
                 case 6 -> hienThi();
-                case 7 -> docFile("NhanVien.csv");
-                case 8 -> ghiFile("NhanVien.csv");
                 case 0 -> System.out.println("Thoat khoi menu quan li nhan vien.");
                 default -> System.out.println("Lua chon khong hop le!");
             }
@@ -262,9 +259,6 @@ public class QuanLiNhanVien extends QuanLiChung {
     }
 
     private void suaNhanVien() {
-        System.out.print("Nhap ma nhan vien can sua: ");
-        String maNV = sc.nextLine();
-
         System.out.println("\nChon loai nhan vien muon sua:");
         System.out.println("1. Nhan vien ban hang");
         System.out.println("2. Nhan vien dung bep");
@@ -273,6 +267,9 @@ public class QuanLiNhanVien extends QuanLiChung {
         int loaiNV = sc.nextInt();
         sc.nextLine();
 
+        System.out.print("Nhap ma nhan vien can sua: ");
+        String maNV = sc.nextLine();
+        
         System.out.print("Nhap ho ten moi: ");
         String hoTen = sc.nextLine();
         System.out.print("Nhap loai cong viec moi: ");

@@ -6,7 +6,6 @@ import java.util.*;
 public class QuanLiCSVC extends QuanLiChung{
     private List<CoSoVatChat> dsCoSoVatChat = new ArrayList<>();
     private Scanner sc = new Scanner(System.in);
-    private int soLuongBBG, soLuongDCA, soLuongDCN;
     private final String TEN_FILE = "src/cosovatchat.csv";
 
     public String timMaLonNhat (String prefix){
@@ -83,6 +82,7 @@ public class QuanLiCSVC extends QuanLiChung{
             return;
         }
 
+        csvc.setLoai(newInfo.getLoai());
         csvc.setTinhTrang(newInfo.getTinhTrang());
         csvc.setNgayBaoTriCuoi(newInfo.getNgayBaoTriCuoi());
 
@@ -136,7 +136,6 @@ public class QuanLiCSVC extends QuanLiChung{
             System.out.println("Chưa có dữ liệu nào!");
         }
         System.out.println("================================");
-        ghiFile(TEN_FILE);
     }
 
     
@@ -186,12 +185,38 @@ public class QuanLiCSVC extends QuanLiChung{
             switch (choice) {
                 case 1: //Thêm
                     CoSoVatChat csvc = new CoSoVatChat();
-                    System.out.print("Nhập mã CSVC: ");
-                    csvc.setMaCSVC(sc.nextLine().trim().toUpperCase());
+                    String ma;
+                    while (true) {
+                        System.out.print("Nhập mã CSVC (phải bắt đầu bằng " + prefix + ", ví dụ: " + prefix + "001): ");
+                        ma = sc.nextLine().trim().toUpperCase();
+                        
+                        if (!ma.startsWith(prefix)) {
+                            System.out.println("Lỗi: Mã phải bắt đầu bằng " + prefix + "!");
+                            continue;
+                        }
+                        if (ma.length() < 4) {
+                            System.out.println("Lỗi: Mã quá ngắn! Ví dụ đúng: " + prefix + "001");
+                            continue;
+                        }
+                        if (!ma.substring(3).matches("\\d+")) {
+                            System.out.println("Lỗi: Phần sau " + prefix + " phải là số! Ví dụ: " + prefix + "001");
+                            continue;
+                        }
+                        if (timKiem(ma) != null) {
+                            System.out.println("Lỗi: Mã " + ma + " đã tồn tại!");
+                            continue;
+                        }
+                        break;
+                    }
+                    
+                    csvc.setMaCSVC(ma);
+                    System.out.print("Nhập loại CSVC: ");
+                    csvc.setLoai(sc.nextLine());
                     System.out.print("Nhập tình trạng: ");
                     csvc.setTinhTrang(sc.nextLine());
-                    System.out.print("Nhập ngày bảo trì cuối: ");
+                    System.out.print("Nhập ngày bảo trì cuối (dd/MM/yyyy): ");
                     csvc.setNgayBaoTriCuoi(sc.nextLine());
+                    
                     them(csvc);
                     break;
                 case 2: //Xóa
@@ -202,6 +227,8 @@ public class QuanLiCSVC extends QuanLiChung{
                     System.out.print ("Nhập mã cần sửa: ");
                     String maSua = sc.nextLine().toUpperCase();
                     CoSoVatChat capNhat = new CoSoVatChat();
+                    System.out.print("Nhập loại mới: ");
+                    capNhat.setLoai(sc.nextLine());
                     System.out.print("Tình trạng mới: ");
                     capNhat.setTinhTrang(sc.nextLine());
                     System.out.print("Ngày bảo trì mới: ");
@@ -250,31 +277,7 @@ public class QuanLiCSVC extends QuanLiChung{
                 CoSoVatChat csvt = new CoSoVatChat(ma,loai,tt,bt);
                 dsCoSoVatChat.add(csvt);
             }
-            for (CoSoVatChat csvt : dsCoSoVatChat) {
-                String prefix = csvt.getMaCSVC().substring(0,3).toUpperCase();
-                int num = Integer.parseInt(csvt.getMaCSVC().substring(3));
-
-                switch (prefix) {
-                    case "BBG" -> {
-                        if (num > soLuongBBG) {
-                            soLuongBBG = num;
-                        }
-                    }
-                    case "DCA" -> {
-                        if(num > soLuongDCA) {
-                            soLuongDCA = num;
-                        }
-                    }
-                    case "DCN" -> {
-                        if(num > soLuongDCN) {
-                            soLuongDCN = num;
-                        }
-                    }
-                }
-            }
-
             System.out.println("Doc File Thanh Cong: " + dsCoSoVatChat.size());
-
         }catch (Exception e) {
             System.out.println("Loi Doc File: " + e.getMessage());
         }
@@ -283,6 +286,8 @@ public class QuanLiCSVC extends QuanLiChung{
     @Override
     public void ghiFile(String tenFile) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile))) {
+            bw.write("MaCSVC,Loai,TinhTrang,NgayBaoTriCuoi");
+            bw.newLine();
             for(CoSoVatChat csvt : dsCoSoVatChat) {
                 bw.write(csvt.toCSV());
                 bw.newLine();

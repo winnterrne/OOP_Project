@@ -13,8 +13,7 @@ public class NhanVienDungBep extends NhanVien {
 
     public NhanVienDungBep (String maNV, String hoTen, String loaiCongViec, String cmnd, int soNgayNghi, int namVaoLam, double heSoLuong, int soLuongOrder, String quayPhuTrach){
         super(hoTen, loaiCongViec, cmnd, soNgayNghi, namVaoLam, heSoLuong);
-        if (maNV.startsWith("DB")) this.maNV = maNV;
-        else this.maNV = "DB" + maNV.substring(2);
+        this.maNV = maNV;
         this.soLuongOrder = soLuongOrder;
         this.quayPhuTrach = quayPhuTrach;
     }
@@ -46,6 +45,6 @@ public class NhanVienDungBep extends NhanVien {
         else return 0;
     }
     public String toCSV() {
-        return "NhanVienDungBep, " + super.toCSV() + "," + soLuongOrder + "," + quayPhuTrach;
+        return "NhanVienDungBep," + super.toCSV() + "," + soLuongOrder + "," + quayPhuTrach;
     }
 }

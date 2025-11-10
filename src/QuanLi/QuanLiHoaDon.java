@@ -115,12 +115,14 @@ public class QuanLiHoaDon extends QuanLiChung{
                     System.out.print("Nhập ngày xuất hóa đơn (dd/MM/yyyy): ");
                     hd.setNgayXuatHoaDon(sc.nextLine());
                     them(hd);
+                    ghiFile(TEN_FILE);
                     break;
 
                 case 2: //Xóa
                     System.out.print("Nhập mã cần xóa: ");
                     String maXoa = sc.nextLine();
                     xoa(maXoa);
+                    ghiFile(TEN_FILE);
                     break;
 
                 case 3: //Sửa
@@ -132,6 +134,7 @@ public class QuanLiHoaDon extends QuanLiChung{
                     System.out.print("Nhập ngày xuất hóa đơn mới: ");
                     hdmoi.setNgayXuatHoaDon(sc.nextLine().trim());
                     sua(maSua, hdmoi);
+                    ghiFile(TEN_FILE);
                     break;
 
                 case 4: //Tìm kiếm
@@ -144,6 +147,7 @@ public class QuanLiHoaDon extends QuanLiChung{
 
                 case 5: //Sắp xếp
                     sapXepTheoMaHD();
+                    ghiFile(TEN_FILE);
                     break;
 
                 case 6: //Hiển thị
