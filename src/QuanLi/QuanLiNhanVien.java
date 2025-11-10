@@ -18,6 +18,8 @@ import java.io.IOException;
 public class QuanLiNhanVien extends QuanLiChung {
     private int tongSoNhanVien;
     private List<NhanVien> dsNhanVien = new ArrayList<>();
+    private Scanner sc = new Scanner(System.in);
+    private final String TEN_FILE = "nhanvien.csv";
 
     public QuanLiNhanVien() {
         super();
@@ -62,8 +64,10 @@ public class QuanLiNhanVien extends QuanLiChung {
         return null;
     }
 
-    public void sapXepNVTheoLuong() {
-        dsNhanVien.sort(Comparator.comparingDouble(NhanVien::tinhLuong));
+    public void sapXepNVTheoMa() {
+        dsNhanVien.sort(Comparator.comparing(NhanVien::getMaNV));
+        System.out.println("Đã sắp xếp nhân viên theo mã nhân viên");
+        ghiFile(TEN_FILE);
     }
 
     public void hienThi() {
@@ -71,9 +75,11 @@ public class QuanLiNhanVien extends QuanLiChung {
             System.out.println("Danh sach rong!");
             return;
         }
+        sapXepNVTheoMa();
         for (NhanVien nv : dsNhanVien) {
             nv.xuatNhanVien();
         }
+        System.out.println("Tổng số nhân viên: " + tongSoNhanVien);
     }
 
     // =====================================
@@ -116,9 +122,9 @@ public class QuanLiNhanVien extends QuanLiChung {
                 if (nv != null) dsNhanVien.add(nv);
             }
 
-            System.out.println("✅ Da doc file thanh cong (" + dsNhanVien.size() + " nhan vien).");
+            System.out.println("Da doc file thanh cong (" + dsNhanVien.size() + " nhan vien).");
         } catch (IOException e) {
-            System.out.println("❌ Loi khi doc file: " + e.getMessage());
+            System.out.println("Loi khi doc file: " + e.getMessage());
         }
     }
 
@@ -131,9 +137,9 @@ public class QuanLiNhanVien extends QuanLiChung {
                 bw.write(nv.toCSV());
                 bw.newLine();
             }
-            System.out.println("✅ Da ghi danh sach nhan vien ra file: " + tenFile);
+            System.out.println("Da ghi danh sach nhan vien ra file: " + tenFile);
         } catch (IOException e) {
-            System.out.println("❌ Loi khi ghi file: " + e.getMessage());
+            System.out.println("Loi khi ghi file: " + e.getMessage());
         }
     }
 
@@ -141,7 +147,6 @@ public class QuanLiNhanVien extends QuanLiChung {
     // MENU CHINH
     // =====================================
     public void menu() {
-        Scanner sc = new Scanner(System.in);
         int choice;
         do {
             System.out.println("\n===== MENU QUAN LI NHAN VIEN =====");
@@ -164,14 +169,14 @@ public class QuanLiNhanVien extends QuanLiChung {
                 case 3 -> suaNhanVien();
                 case 4 -> timNhanVien();
                 case 5 -> {
-                    sapXepNVTheoLuong();
-                    System.out.println("✅ Da sap xep nhan vien theo luong!");
+                    sapXepNVTheoMa();
+                    System.out.println("Da sap xep nhan vien theo luong!");
                 }
                 case 6 -> hienThi();
                 case 7 -> docFile("NhanVien.csv");
                 case 8 -> ghiFile("NhanVien.csv");
-                case 0 -> System.out.println("👋 Thoat khoi menu quan li nhan vien.");
-                default -> System.out.println("❌ Lua chon khong hop le!");
+                case 0 -> System.out.println("Thoat khoi menu quan li nhan vien.");
+                default -> System.out.println("Lua chon khong hop le!");
             }
         } while (choice != 0);
     }
@@ -180,8 +185,6 @@ public class QuanLiNhanVien extends QuanLiChung {
     // CAC PHUONG THUC CON
     // =====================================
     private void themNhanVien() {
-        Scanner sc = new Scanner(System.in);
-
         System.out.println("\nChon loai nhan vien muon them:");
         System.out.println("1. Nhan vien ban hang");
         System.out.println("2. Nhan vien dung bep");
@@ -189,9 +192,13 @@ public class QuanLiNhanVien extends QuanLiChung {
         System.out.print("Nhap lua chon: ");
         int loaiNV = sc.nextInt();
         sc.nextLine();
-
-        System.out.print("Nhap ma NV: ");
-        String maNV = sc.nextLine();
+        String maNV;
+        do{
+            System.out.print("Nhap ma NV: ");
+            maNV = sc.nextLine();
+            if (timKiem(maNV) != null)
+                System.out.println("Mã nhân viên đã tồn tại, vui lòng nhập lại!");
+        }while (timKiem(maNV) != null);
         System.out.print("Nhap ho ten: ");
         String hoTen = sc.nextLine();
         System.out.print("Nhap loai cong viec: ");
@@ -232,25 +239,25 @@ public class QuanLiNhanVien extends QuanLiChung {
                 double phuCapQL = sc.nextDouble();
                 nv = new QuanLi(maNV, hoTen, loaiCV, cmnd, ngayNghi, namVaoLam, heSo, phongBan, chiNhanhQL, phuCapQL);
             }
-            default -> System.out.println("❌ Loai nhan vien khong hop le!");
+            default -> System.out.println("Loai nhan vien khong hop le!");
         }
 
         if (nv != null) {
             them(nv);
-            System.out.println("✅ Da them nhan vien!");
+            ghiFile(TEN_FILE);
+            System.out.println("Da them nhan vien!");
         }
     }
 
     private void xoaNhanVien() {
-        Scanner sc = new Scanner(System.in);
         System.out.print("Nhap ma nhan vien can xoa: ");
         String ma = sc.nextLine();
         xoa(ma);
-        System.out.println("✅ Da xoa nhan vien neu ton tai.");
+        ghiFile(TEN_FILE);
+        System.out.println("Da xoa nhan vien neu ton tai.");
     }
 
     private void suaNhanVien() {
-        Scanner sc = new Scanner(System.in);
         System.out.print("Nhap ma nhan vien can sua: ");
         String maNV = sc.nextLine();
 
@@ -302,25 +309,25 @@ public class QuanLiNhanVien extends QuanLiChung {
                 double phuCapQL = sc.nextDouble();
                 nvMoi = new QuanLi(maNV, hoTen, loaiCV, cmnd, ngayNghi, namVaoLam, heSo, phongBan, chiNhanhQL, phuCapQL);
             }
-            default -> System.out.println("❌ Loai nhan vien khong hop le!");
+            default -> System.out.println("Loai nhan vien khong hop le!");
         }
 
         if (nvMoi != null) {
             sua(maNV, nvMoi);
-            System.out.println("✅ Da sua thong tin nhan vien thanh cong!");
+            ghiFile(TEN_FILE);
+            System.out.println("Da sua thong tin nhan vien thanh cong!");
         }
     }
 
     private void timNhanVien() {
-        Scanner sc = new Scanner(System.in);
         System.out.print("Nhap ma nhan vien can tim: ");
         String ma = sc.nextLine();
         Object obj = timKiem(ma);
         if (obj instanceof NhanVien nv) {
-            System.out.println("🔍 Tim thay nhan vien:");
+            System.out.println("Tim thay nhan vien:");
             nv.xuatNhanVien();
         } else {
-            System.out.println("❌ Khong tim thay nhan vien co ma " + ma);
+            System.out.println("Khong tim thay nhan vien co ma " + ma);
         }
     }
 }

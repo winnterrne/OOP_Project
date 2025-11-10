@@ -7,32 +7,68 @@ public class QuanLiCSVC extends QuanLiChung{
     private List<CoSoVatChat> dsCoSoVatChat = new ArrayList<>();
     private Scanner sc = new Scanner(System.in);
     private int soLuongBBG, soLuongDCA, soLuongDCN;
+    private final String TEN_FILE = "cosovatchat.csv";
 
-    public void them (Object obj){
-        if (!(obj instanceof CoSoVatChat csvc)) return;
-        String prefix = csvc.getMaCSVC().substring(0,3).toUpperCase();
-        String maMoi = "";
+    public String timMaLonNhat (String prefix){
+        int max = 0;
+        String maMax = null;
+        for (CoSoVatChat c : dsCoSoVatChat){
+            String ma = c.getMaCSVC();
+            if (ma.startsWith(prefix) && ma.length() > 3){
+                try{
+                    int so = Integer.parseInt(ma.substring(3));
+                    if (so > max){
+                        max = so;
+                        maMax = ma;
+                    }
+                } catch (NumberFormatException e){
 
-        if (prefix.equals("BBG")){
-            soLuongBBG++;
-            maMoi = "BBG" + String.format("%03d", soLuongBBG);
-        }else if (prefix.equals("DCA")){
-            soLuongDCA++;
-            maMoi = "DCA" + String.format ("%03d", soLuongDCA);
-        }else if (prefix.equals("DCN")){
-            soLuongDCN++;
-            maMoi = "DCN" + String.format ("%03d", soLuongDCN);
-        }else {
-            System.out.println("Mã phải bắt đầu bằng BBG, DCA hoặc DCN");
+                }
+            }
+        }
+        return maMax;
+    }
+
+    @Override
+    public void them(Object obj) {
+       if (!(obj instanceof CoSoVatChat csvc)) {
+           System.out.println("Đối tượng truyền vào không phải CoSoVatChat!");
+           return;
+        }
+
+       String ma = csvc.getMaCSVC();
+       if (ma == null || ma.length() < 3) {
+           System.out.println("Mã CSVC không hợp lệ!");
             return;
         }
-        csvc.setMaCSVC(maMoi);
+
+        for (CoSoVatChat c : dsCoSoVatChat){
+            if (c.getMaCSVC().equalsIgnoreCase(ma)){
+                System.out.println("Mã này đã tồn tại");
+                String prefix = ma.substring(0, 3).toUpperCase();
+                String maLonNhat = timMaLonNhat(prefix);
+                if (maLonNhat != null){
+                    System.out.println("Mã lớn nhất hiện tại của loại " + prefix + " là: " + maLonNhat);
+                }else System.out.println("Không tìm thấy mã nào cùng loại");
+                System.out.println("Vui lòng nhập lại mã khác");
+                return;
+            }
+        }
+
         dsCoSoVatChat.add(csvc);
-        System.out.println("Thêm thành công, Mã: " + maMoi);
+        ghiFile(TEN_FILE);
+        System.out.println("Thêm thành công!");
     }
 
     public void xoa (String id){
-        dsCoSoVatChat.removeIf(csvc -> csvc.getMaCSVC().equalsIgnoreCase(id));
+        boolean removed = dsCoSoVatChat.removeIf(kh -> kh.getMaCSVC().equalsIgnoreCase(id));
+        if (removed) {
+            System.out.println("Da xoa CSVC co ma: " + id);
+            ghiFile(TEN_FILE); // ghi lại ngay sau khi xóa
+        } else {
+            System.out.println("Khong tim thay CSVC can xoa!");
+        }
+
     }
 
     public void sua(String id, Object obj) {
@@ -50,6 +86,7 @@ public class QuanLiCSVC extends QuanLiChung{
         csvc.setTinhTrang(newInfo.getTinhTrang());
         csvc.setNgayBaoTriCuoi(newInfo.getNgayBaoTriCuoi());
 
+        ghiFile(TEN_FILE);
         System.out.println("Đã cập nhật thông tin CSVC có mã " + id);
     }
 
@@ -65,11 +102,16 @@ public class QuanLiCSVC extends QuanLiChung{
     public void sapXep() {
         dsCoSoVatChat.sort(Comparator.comparing(CoSoVatChat::getMaCSVC));
         System.out.println("Đã sắp xếp danh sách theo mã CSVC (A-Z)!");
+        ghiFile(TEN_FILE);
     }
 
     public void hienThi (String prefix){
         String ten = "";
         int tongSoLuong = 0;
+        if (prefix == null || prefix.isEmpty()) {
+            System.out.println("Vui lòng chọn loại CSVC trước khi hiển thị!");
+            return;
+        }
         if (prefix.equals("BBG")) ten = "Bộ bàn ghế";
         else if (prefix.equals("DCA")) ten = "Dụng cụ ăn";
         else if (prefix.equals("DCN")) ten = "Dụng cụ nấu ăn";
@@ -94,11 +136,16 @@ public class QuanLiCSVC extends QuanLiChung{
             System.out.println("Chưa có dữ liệu nào!");
         }
         System.out.println("================================");
+        ghiFile(TEN_FILE);
     }
+
+    
 
     public void menu (){
         int n;
         String prefix = "";
+        docFile(TEN_FILE);
+
         do {
             System.out.println("\n=====CHỌN ĐỐI TƯỢNG QUẢN LÍ=====");
             System.out.println("1. Quản lí bộ bàn ghế");
@@ -109,6 +156,19 @@ public class QuanLiCSVC extends QuanLiChung{
         }while (n < 1 || n > 3);
         sc.nextLine();
 
+        switch (n) {
+            case 1:
+                prefix = "BBG";
+                break;
+            case 2:
+                prefix = "DCA";
+                break;
+            case 3:
+                prefix = "DCN";
+                break;
+            default:
+                break;
+        }
         int choice;
         do {
             System.out.println("\n=====QUẢN LÍ CƠ SỞ VẬT CHẤT=====");
@@ -126,6 +186,8 @@ public class QuanLiCSVC extends QuanLiChung{
             switch (choice) {
                 case 1: //Thêm
                     CoSoVatChat csvc = new CoSoVatChat();
+                    System.out.print("Nhập mã CSVC: ");
+                    csvc.setMaCSVC(sc.nextLine().trim().toUpperCase());
                     System.out.print("Nhập tình trạng: ");
                     csvc.setTinhTrang(sc.nextLine());
                     System.out.print("Nhập ngày bảo trì cuối: ");
