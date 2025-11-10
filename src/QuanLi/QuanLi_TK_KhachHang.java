@@ -1,13 +1,22 @@
 package QuanLi;
 
 import DichVu.KhachHang;
+import DichVu.HoaDon;
 import java.io.*;
 import java.util.*;
 
 public class QuanLi_TK_KhachHang extends QuanLiChung {
     private Scanner sc = new Scanner(System.in);
     private ArrayList<KhachHang> dsKhachHang = new ArrayList<>();
-    private final String TEN_FILE = "src/khachhang.csv"; // tên file mặc định
+    private final String TEN_FILE = "src/khachhang.csv";
+    private QuanLiHoaDon qlhd;
+
+    public QuanLi_TK_KhachHang() {
+        qlhd = new QuanLiHoaDon();
+        qlhd.docFile(TEN_FILE.replace("khachhang", "hoadon"));
+        qlhd.docFileDonHang(TEN_FILE.replace("khachhang", "hoadon"));
+        docFile(TEN_FILE);
+    }
 
     // ------------------ CÁC CHỨC NĂNG CƠ BẢN ------------------
 
@@ -16,7 +25,7 @@ public class QuanLi_TK_KhachHang extends QuanLiChung {
         if (obj instanceof KhachHang kh) {
             dsKhachHang.add(kh);
             System.out.println("Da them khach hang: " + kh.getTenKH());
-            ghiFile(TEN_FILE); // ghi lại ngay sau khi thêm
+            ghiFile(TEN_FILE);
         }
     }
 
@@ -35,7 +44,7 @@ public class QuanLi_TK_KhachHang extends QuanLiChung {
         boolean removed = dsKhachHang.removeIf(kh -> kh.getMaKH().equalsIgnoreCase(maKH));
         if (removed) {
             System.out.println("Da xoa khach hang co ma: " + maKH);
-            ghiFile(TEN_FILE); // ghi lại ngay sau khi xóa
+            ghiFile(TEN_FILE);
         } else {
             System.out.println("Khong tim thay khach hang can xoa!");
         }
@@ -49,7 +58,7 @@ public class QuanLi_TK_KhachHang extends QuanLiChung {
                 kh.setDiaChi(khMoi.getDiaChi());
                 kh.setSoDienThoai(khMoi.getSoDienThoai());
                 System.out.println("Da sua thong tin khach hang: " + maKH);
-                ghiFile(TEN_FILE); // ghi lại ngay sau khi sửa
+                ghiFile(TEN_FILE);
                 return;
             }
         }
@@ -62,15 +71,22 @@ public class QuanLi_TK_KhachHang extends QuanLiChung {
         try (BufferedReader br = new BufferedReader(new FileReader(tenFile))) {
             String line;
             br.readLine();
-            dsKhachHang.clear(); // xóa danh sách cũ trước khi đọc lại
+            dsKhachHang.clear();
             while ((line = br.readLine()) != null) {
                 String[] arr = line.split(",");
-                if (arr.length == 4) {
+                if (arr.length >= 4) {
                     String maKH = arr[0].trim();
                     String tenKH = arr[1].trim();
                     String diaChi = arr[2].trim();
                     int soDienThoai = Integer.parseInt(arr[3].trim());
-                    dsKhachHang.add(new KhachHang(maKH, tenKH, diaChi, soDienThoai));
+                    KhachHang kh = new KhachHang(maKH, tenKH, diaChi, soDienThoai);
+                    if (arr.length >= 5) {
+                        String maHD = arr[4].trim();
+                        HoaDon hd = (HoaDon) qlhd.timKiem(maHD);
+                        if (hd != null) kh.setHoadon(hd);
+                        else System.out.println("Khong tim thay hoa don voi ma: " + maHD);
+                    }
+                    dsKhachHang.add(kh);
                 }
             }
             System.out.println("Doc file thanh cong: " + tenFile);
@@ -83,9 +99,12 @@ public class QuanLi_TK_KhachHang extends QuanLiChung {
 
     public void ghiFile(String tenFile) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile))) {
+            bw.write("MaKH,TenKH,DiaChi,SDT,MaHD");
+            bw.newLine();
             for (KhachHang kh : dsKhachHang) {
+                String maHD = (kh.getHoadon() != null) ? kh.getHoadon().getMaHoaDon() : "";
                 String line = kh.getMaKH() + "," + kh.getTenKH() + "," +
-                        kh.getDiaChi() + "," + kh.getSoDienThoai();
+                        kh.getDiaChi() + "," + kh.getSoDienThoai() + "," + maHD;
                 bw.write(line);
                 bw.newLine();
             }
@@ -122,10 +141,11 @@ public class QuanLi_TK_KhachHang extends QuanLiChung {
             System.out.println("3. Xoa khach hang");
             System.out.println("4. Tim kiem khach hang");
             System.out.println("5. Hien thi danh sach");
+            System.out.println("6.Gán hóa đơn cho khách hàng");
             System.out.println("0. Thoat");
             System.out.print("Chon chuc nang: ");
             choice = sc.nextInt();
-            sc.nextLine(); // bỏ dòng trống
+            sc.nextLine();
 
             switch (choice) {
                 case 1 -> {
@@ -165,8 +185,25 @@ public class QuanLi_TK_KhachHang extends QuanLiChung {
                     else System.out.println("Khong tim thay!");
                 }
                 case 5 -> hienThi();
-                case 0 -> System.out.println("Thoat chuong trinh!");
-                default -> System.out.println("Lua chon khong hop le!");
+                case 6 -> {
+                    System.out.print("Nhap ma KH can gan hoa don: ");
+                    String maKH = sc.nextLine().trim();
+                    KhachHang kh = timKiem(maKH);
+                    if (kh == null) {
+                        System.out.println("Khong tim thay khach hang!");
+                        break;
+                    }
+                    System.out.print("Nhap ma hoa don: ");
+                    String maHD = sc.nextLine().trim();
+                    HoaDon hd = (HoaDon) qlhd.timKiem(maHD);
+                    if (hd != null) {
+                        kh.setHoadon(hd);
+                        System.out.println("Da gan hoa don " + maHD + " cho khach hang " + maKH);
+                        ghiFile(TEN_FILE);
+                    } else {
+                        System.out.println("Khong tim thay hoa don voi ma: " + maHD);
+                    }
+                }
             }
 
         } while (choice != 0);
