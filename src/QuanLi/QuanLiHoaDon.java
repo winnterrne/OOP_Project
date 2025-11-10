@@ -244,7 +244,7 @@ public class QuanLiHoaDon extends QuanLiChung{
     public void ghiFile(String tenFile) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile))) {
 
-            bw.write("MaHD,MaSP,SoLuong");
+            bw.write("MaHD,MaVC,NgayXuat");
             bw.newLine();
 
             for (HoaDon hd : dsHoaDon) {
@@ -252,8 +252,8 @@ public class QuanLiHoaDon extends QuanLiChung{
                 for (DonHang dh : hd.getDsDonHang()) {
                     bw.write(
                             hd.getMaHoaDon() + "," +
-                                    dh.getSp().getMaSanPham() + "," +
-                                    dh.getSoLuong()
+                            dh.getSp().getMaSanPham() + "," +
+                            dh.getSoLuong()
                     );
                     bw.newLine();
                 }

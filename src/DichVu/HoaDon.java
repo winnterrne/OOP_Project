@@ -51,15 +51,22 @@ public class HoaDon implements KhuyenMai{
 
     @Override
     public double apDungKhuyenMai() {
-        double giaGoc = 0;
-        java.time.DayOfWeek ngay = java.time.LocalDate.now().getDayOfWeek();
-        if(ngay == DayOfWeek.TUESDAY) {
-            return giaGoc * 0.85;
+        if (ngayXuatHoaDon == null || ngayXuatHoaDon.isEmpty()) return 1.0;
+
+        try {
+            java.time.LocalDate date = java.time.LocalDate.parse(ngayXuatHoaDon, 
+                    java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            java.time.DayOfWeek day = date.getDayOfWeek();
+
+            if (day == DayOfWeek.TUESDAY) {
+                return 0.85;
+            }
+        } catch (Exception e) {
         }
-        return giaGoc;
+        return 1.0;
     }
     public double tongTienSauKhuyenMai() {
-        return apDungKhuyenMai() * tinhTongTien();
+        return tinhTongTien() * apDungKhuyenMai();
     }
     public void inHoaDon() {
         System.out.println("===== HÓA ĐƠN =====");
@@ -75,5 +82,15 @@ public class HoaDon implements KhuyenMai{
 
     public List<DonHang> getDsDonHang() {
         return dsDonHang;
+    }
+
+    @Override
+    public String toString() {
+        return "Hóa đơn " + maHoaDon + " - Ngày: " + ngayXuatHoaDon + 
+            " - Tổng: " + String.format("%,.0f", tongTienSauKhuyenMai()) + "đ";
+    }
+
+    public String toCSV() {
+        return maHoaDon + "," + maVanChuyen + "," + ngayXuatHoaDon;
     }
 }

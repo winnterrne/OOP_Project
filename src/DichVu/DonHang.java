@@ -35,4 +35,8 @@ public class DonHang {
     public SanPham getSp() {
         return sp;
     }
+
+    public String toCSV(){
+        return sp.getMaSanPham() + "," + getSoLuong();
+    }
 }
