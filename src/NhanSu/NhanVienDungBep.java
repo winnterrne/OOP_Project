@@ -36,7 +36,7 @@ public class NhanVienDungBep extends NhanVien {
     @Override
     public void xuatNhanVien(){
         super.xuatNhanVien();
-        System.out.println("Quay phu trach: " + quayPhuTrach + " | So luong order: " + soLuongOrder);
+        System.out.println("Quay phu trach: " + getQuayPhuTrach() + " | So luong order: " + getSoLuongOrder());
     }
 
     @Override
@@ -46,6 +46,6 @@ public class NhanVienDungBep extends NhanVien {
         else return 0;
     }
     public String toCSV() {
-        return "NhanVienDungBep: " + super.toCSV() + "," + soLuongOrder + "," + quayPhuTrach;
+        return "NhanVienDungBep, " + super.toCSV() + "," + soLuongOrder + "," + quayPhuTrach;
     }
 }

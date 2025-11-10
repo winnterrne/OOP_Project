@@ -19,7 +19,7 @@ public class QuanLiNhanVien extends QuanLiChung {
     private int tongSoNhanVien;
     private List<NhanVien> dsNhanVien = new ArrayList<>();
     private Scanner sc = new Scanner(System.in);
-    private final String TEN_FILE = "nhanvien.csv";
+    private final String TEN_FILE = "src/nhanvien.csv";
 
     public QuanLiNhanVien() {
         super();
@@ -89,6 +89,7 @@ public class QuanLiNhanVien extends QuanLiChung {
         try (BufferedReader br = new BufferedReader(new FileReader(tenFile))) {
             String dong;
             dsNhanVien.clear();
+            br.readLine();
 
             while ((dong = br.readLine()) != null) {
                 String[] arr = dong.split(",");
@@ -133,6 +134,8 @@ public class QuanLiNhanVien extends QuanLiChung {
     // =====================================
     public void ghiFile(String tenFile) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile))) {
+            bw.write("MaNV,HoTen,LoaiCongViec,CMND,SoNgayNghi,NamVaoLam,HeSoLuong,ThuocTinh1,ThuocTinh2,ThuocTinh3");
+            bw.newLine();
             for (NhanVien nv : dsNhanVien) {
                 bw.write(nv.toCSV());
                 bw.newLine();
@@ -148,6 +151,7 @@ public class QuanLiNhanVien extends QuanLiChung {
     // =====================================
     public void menu() {
         int choice;
+        docFile(TEN_FILE);
         do {
             System.out.println("\n===== MENU QUAN LI NHAN VIEN =====");
             System.out.println("1. Them nhan vien");
@@ -170,7 +174,7 @@ public class QuanLiNhanVien extends QuanLiChung {
                 case 4 -> timNhanVien();
                 case 5 -> {
                     sapXepNVTheoMa();
-                    System.out.println("Da sap xep nhan vien theo luong!");
+                    System.out.println("Da sap xep nhan vien theo ma!");
                 }
                 case 6 -> hienThi();
                 case 7 -> docFile("NhanVien.csv");

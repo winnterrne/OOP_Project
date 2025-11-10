@@ -4,17 +4,21 @@ import DichVu.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
 public class QuanLiSanPham extends QuanLiChung {
     private int tongSoSP;
     private String hanSD;
+    private Scanner sc = new Scanner(System.in);
     List<SanPham> dsSanPham =  new ArrayList<>();
+    private final String TEN_FILE = "src/sanpham.csv";
+
     public double tinhGiaTriTonKho() {
         double tong = 0;
         for (SanPham sp : dsSanPham) {
-            tong += sp.getGiaThanh() * sp.getSoLuong(); // giá × số lượng
+            tong += sp.getGiaThanh() * sp.getSoLuong();
         }
         return tong;
     }
@@ -30,6 +34,7 @@ public class QuanLiSanPham extends QuanLiChung {
     public void them(Object obj) {
         if(obj instanceof SanPham sp){
             dsSanPham.add(sp);
+            tongSoSP++;
             System.out.println("Them thanh cong");
         }
     }
@@ -67,8 +72,14 @@ public class QuanLiSanPham extends QuanLiChung {
     }
 
     @Override
-    public void xoa(String maSanPham) {
-        dsSanPham.removeIf(sp   -> sp.getMaSanPham().equalsIgnoreCase(maSanPham));
+    public void xoa(String maSP) {
+        boolean removed = dsSanPham.removeIf(hd -> hd.getMaSanPham().equalsIgnoreCase(maSP));
+        if (removed) {
+            tongSoSP--;
+            System.out.println("Đã xóa hóa đơn " + maSP);
+        } else {
+            System.out.println("Không tìm thấy hóa đơn có mã " + maSP);
+        }
     }
 
     @Override
@@ -78,6 +89,31 @@ public class QuanLiSanPham extends QuanLiChung {
         }
         return null;
     }
+
+	public void sapXep(){
+		dsSanPham.sort(Comparator.comparing(SanPham::getMaSanPham));
+		System.out.println("Đã sắp xêp sản phẩm theo mã");
+	}
+
+	public void hienThi() {
+		System.out.println("\n===== DANH SÁCH SẢN PHẨM =====");
+
+		for (SanPham sp : dsSanPham) {
+			if (sp instanceof DoUong || sp instanceof ThucAn) {
+				sp.xuatSanPham();
+			}
+		}
+
+		System.out.println("\n===== DANH SÁCH COMBO =====");
+		for (SanPham sp : dsSanPham) {
+			if (sp instanceof Combo) {
+				sp.xuatSanPham();
+			}
+		}
+
+		System.out.println("==============================");
+	}
+
     public void docFile(String tenFile) {
         File f = new File(tenFile);
         if(!f.exists()) {
@@ -92,18 +128,19 @@ public class QuanLiSanPham extends QuanLiChung {
             while ((line = br.readLine()) != null) {
                 String[] p = line.split(",");
                 if(p.length < 7) continue;
-                String loai = p[0];
-                String ma = p[1];
-                String ten = p[2];
-                int sl = Integer.parseInt(p[3]);
-                double gia = Double.parseDouble(p[4]);
-                String t1 = p[5];
-                String t2 = p[6];
-                String t3 = p.length > 7 ? p[7] : " ";
+                String loai = p[0].trim();
+                String ma = p[1].trim();
+                String ten = p[2].trim();
+                int sl = Integer.parseInt(p[3].trim());
+                double gia = Double.parseDouble(p[4].trim());
+                String t1 = p[5].trim();
+                String t2 = p[6].trim();
+                String t3 = p.length > 7 ? p[7].trim() : " ";
 
                 if(loai.equalsIgnoreCase("DoUong")) {
                     DoUong doUong = new DoUong(ma,ten,sl,gia,t1,Double.parseDouble(t2));
                     dsSanPham.add(doUong);
+					tongSoSP++;
                 }else if(loai.equalsIgnoreCase("ThucAn")) {
                     ThucAn thucAn = new ThucAn(ma,ten,sl,gia,t1,Integer.parseInt(t2));
                     if(!t3.isEmpty()) {
@@ -115,9 +152,11 @@ public class QuanLiSanPham extends QuanLiChung {
                         }
                     }
                     dsSanPham.add(thucAn);
+					tongSoSP++;
                 } else if (loai.equalsIgnoreCase("Combo")) {
                     Combo combo = new Combo(ma,ten,sl,gia,Integer.parseInt(t1),Integer.parseInt(t2));
                     dsSanPham.add(combo);
+					tongSoSP++;
                 }
             }
             System.out.println("Da Doc File Thanh Cong.");
@@ -128,6 +167,8 @@ public class QuanLiSanPham extends QuanLiChung {
 
     public void ghiFile(String tenFile) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile))) {
+			bw.write("Loai,Ma,Ten,SoLuong,GiaThanh,T1,T2,T3");
+            bw.newLine();
             for(SanPham sp : dsSanPham) {
                 bw.write(sp.toCSV());
                 bw.newLine();
@@ -137,28 +178,29 @@ public class QuanLiSanPham extends QuanLiChung {
             System.out.println("Loi ghi file " + e.getMessage());
         }
     }
-    Scanner sc = new Scanner(System.in);
-    public void menu() {
 
-        docFile("sanpham.csv");
+    //========================MENU=======================
+    public void menu() {
+        docFile(TEN_FILE);
         int choice;
         do {
-            choice = Integer.parseInt(sc.nextLine());
-            System.out.println("=====MENU=====");
-            System.out.println("1. Xem Danh Sach San Pham ");
-            System.out.println("2. Them San Pham Vao Danh Sach ");
-            System.out.println("3. Xoa San Pham Ra Khoi Danh Sach ");
-            System.out.println("4. Tim Kiem San Pham ");
-            System.out.println("5. Luu San Pham Vao File ");
-            System.out.println("6.Thoat Chuong Trinh ");
-
+            System.out.println("\n===== MENU QUAN LI SAN PHAM =====");
+            System.out.println("1. Them san pham");
+            System.out.println("2. Xoa san pham");
+            System.out.println("3. Sua thong tin san pham");
+            System.out.println("4. Tim kiem san pham");
+            System.out.println("5. Sap xep san pham theo ma");
+            System.out.println("6. Hien thi danh sach san pham");
+            System.out.println("0. Thoat");
+            System.out.print("Nhap lua chon: ");
+            choice = sc.nextInt(); sc.nextLine();
 
             switch (choice) {
-                case 1 -> xuatDanhSachSanPham();
-                case 2 ->  {
+                case 1 -> {
                     System.out.println("1. Do Uong ");
                     System.out.println("2. Thuc An ");
                     System.out.println("3. Combo ");
+					System.out.print("Moi chon: ");
                     int loai = Integer.parseInt(sc.nextLine());
 
                     System.out.println("Ma San Pham: ");
@@ -166,24 +208,22 @@ public class QuanLiSanPham extends QuanLiChung {
                     System.out.println("Ten San Pham: ");
                     String tenSanPham = sc.nextLine();
                     System.out.println("So Luong: ");
-                    int soLuong = sc.nextInt();
-                    sc.nextLine();
+                    int soLuong = Integer.parseInt(sc.nextLine());
                     System.out.println("Gia Thanh: ");
                     double giaThanh = Double.parseDouble(sc.nextLine());
 
                     if(loai == 1) {
-                        System.out.println("Don Vi Tinh: ");
+                        System.out.println("Don vi tinh: ");
                         String donViTinh = sc.nextLine();
-                        System.out.println("Dung Tich: ");
+                        System.out.println("Dung tich: ");
                         double dungTich = Double.parseDouble(sc.nextLine());
-
                         DoUong doUong = new DoUong(maSanPham, tenSanPham, soLuong, giaThanh, donViTinh, dungTich);
                         them(doUong);
                     }
                     if (loai == 2) {
-                        System.out.println("Nguyen Lieu: ");
+                        System.out.println("Nguyen lieu: ");
                         String nguyenLieu = sc.nextLine();
-                        System.out.println("Thoi Gian Chuan Bi: ");
+                        System.out.println("Thoi gian chuan bi: ");
                         int thoiGianChuanBi = Integer.parseInt(sc.nextLine());
                         System.out.println("Loai (CHIEN / XAO / HAP/ NUONG / NAU)");
                         String l = sc.nextLine();
@@ -197,7 +237,6 @@ public class QuanLiSanPham extends QuanLiChung {
                         int soLuongMon = Integer.parseInt(sc.nextLine());
                         System.out.println("So Luong Nguoi An: ");
                         int soLuongNguoiAn = Integer.parseInt(sc.nextLine());
-
                         Combo combo = new Combo();
                         combo.setMaSanPham(maSanPham);
                         combo.setTenSanPham(tenSanPham);
@@ -205,16 +244,77 @@ public class QuanLiSanPham extends QuanLiChung {
                         combo.setGiaThanh(giaThanh);
                         combo.setSoLuongMon(soLuongMon);
                         combo.setLuongNguoiAn(soLuongNguoiAn);
-
                         them(combo);
                     }
+                    ghiFile(TEN_FILE);
+					break;
                 }
-                case 3 -> {
-                    System.out.println("Nhap Ma San Pham Can Xoa ");
-                    sc.nextLine();
+                case 2 -> {
+                    System.out.print("Nhap Ma San Pham Can Xoa: ");
                     String maSanPham = sc.nextLine();
                     xoa(maSanPham);
+                    ghiFile(TEN_FILE);
+					break;
                 }
+                case 3 -> {
+					System.out.println("1. Do Uong ");
+                    System.out.println("2. Thuc An ");
+                    System.out.println("3. Combo ");
+                    int loai = Integer.parseInt(sc.nextLine());
+					System.out.print ("Nhập mã sản phẩm cần sửa: ");
+					String ma = sc.nextLine();
+					SanPham spSua = (SanPham) timKiem(ma);
+					if (spSua == null) {
+						System.out.println("Không tìm thấy sản phẩm với mã " + ma);
+						break;
+					}
+
+					System.out.print("Tên sản phẩm: ");
+					String tenSanPham = sc.nextLine();
+					System.out.print("Số lượng: ");
+					int soLuong = Integer.parseInt(sc.nextLine());
+					System.out.print("Giá thành: ");
+					double giaThanh = Double.parseDouble(sc.nextLine());
+
+					spSua.setTenSanPham(tenSanPham);
+					spSua.setSoLuong(soLuong);
+					spSua.setGiaThanh(giaThanh);
+
+					if (loai == 1 && spSua instanceof DoUong) {
+						System.out.print("Đơn vị tính: ");
+						String donViTinh = sc.nextLine();
+						System.out.print("Dung tích: ");
+						double dungTich = Double.parseDouble(sc.nextLine());
+
+						((DoUong) spSua).setDonViTinh(donViTinh);
+						((DoUong) spSua).setDungTich(dungTich);
+					} else if (loai == 2 && spSua instanceof ThucAn) {
+						System.out.print("Nguyên liệu: ");
+						String nguyenLieu = sc.nextLine();
+						System.out.print("Thời gian chuẩn bị: ");
+						int thoiGianChuanBi = Integer.parseInt(sc.nextLine());
+						System.out.print("Loại (CHIEN / XAO / HAP / NUONG / NAU): ");
+						String l = sc.nextLine();
+
+						((ThucAn) spSua).setNguyenLieu(nguyenLieu);
+						((ThucAn) spSua).setThoiGianChuanBi(thoiGianChuanBi);
+					} else if (loai == 3 && spSua instanceof Combo) {
+						System.out.print("Số lượng món: ");
+						int soLuongMon = Integer.parseInt(sc.nextLine());
+						System.out.print("Số lượng người ăn: ");
+						int soLuongNguoiAn = Integer.parseInt(sc.nextLine());
+
+						((Combo) spSua).setSoLuongMon(soLuongMon);
+						((Combo) spSua).setLuongNguoiAn(soLuongNguoiAn);
+					} else {
+						System.out.println("Loại sản phẩm không khớp với mã đã chọn!");
+					}
+
+					ghiFile(TEN_FILE);
+					System.out.println("Sửa sản phẩm thành công!");
+					break;
+				}
+				
                 case 4 -> {
                     sc.nextLine();
                     System.out.println("Tim Kiem San Pham: ");
@@ -227,20 +327,28 @@ public class QuanLiSanPham extends QuanLiChung {
                     }else {
                         System.out.println("Khong Tim Thay San Pham" + maSanPham);
                     }
+					break;
                 }
+
                 case 5 -> {
-                    sc.nextLine();
-                    System.out.println("Nhap Ten File Can Luu");
-                    String tenFile = sc.nextLine();
-                    ghiFile(tenFile);
+                    sapXep();
+					ghiFile(TEN_FILE);
+					break;
                 }
+
                 case 6 -> {
-                    System.out.println("Da Thoat Chuong Trinh");
+                    hienThi();
+					break;
                 }
+				case 0 -> {
+					System.out.println("Thoát quản lí");
+					break;
+				}
                 default -> {
                     System.out.println("Loi ");
+					break;
                 }
             }
-        } while (choice != 6);
+        } while (choice != 0);
     }
 }

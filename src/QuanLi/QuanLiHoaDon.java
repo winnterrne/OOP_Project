@@ -13,6 +13,7 @@ public class QuanLiHoaDon extends QuanLiChung{
     public int getTongSoHoaDon() {return this.tongSoHoaDon;}
     public void setTongSoHoaDon(int tongSoHoaDon) {this.tongSoHoaDon = tongSoHoaDon;}
     private Scanner sc = new Scanner(System.in);
+    private final String TEN_FILE = "src/hoadon.csv";
     public QuanLiHoaDon() {}
 
     public double tinhDoanhThuTheoNgay(String ngay) {
@@ -83,24 +84,16 @@ public class QuanLiHoaDon extends QuanLiChung{
         System.out.println("Đã sắp xếp hóa đơn theo mã");
     }
 
-    public void hienThi(String id) {
-        if (id == null || id.isEmpty()) {
-            System.out.println("\n===== DANH SÁCH HÓA ĐƠN =====");
-            dsHoaDon.forEach(HoaDon::inHoaDon);
-            System.out.println("==============================");
-            return;
-        }
-
-        HoaDon hd = (HoaDon) timKiem(id);
-        if (hd != null) {
-            hd.inHoaDon();
-        } else {
-            System.out.println("Không tìm thấy hóa đơn có mã " + id);
-        }
+    public void hienThi() {
+        System.out.println("\n===== DANH SÁCH HÓA ĐƠN =====");
+        dsHoaDon.forEach(HoaDon::inHoaDon);
+        System.out.println("==============================");
     }
+
 
     public void menu (){
         int choice;
+        docFile(TEN_FILE);
         do{
             System.out.println("\n=====QUẢN LÍ HÓA ĐƠN=====");
             System.out.println("1.Thêm hóa đơn");
@@ -154,9 +147,7 @@ public class QuanLiHoaDon extends QuanLiChung{
                     break;
 
                 case 6: //Hiển thị
-                    System.out.println("Nhập mã cần hiển thị (Bỏ trống nếu cần hiển thị tất cả): ");
-                    String maHienThi = sc.nextLine();
-                    hienThi(maHienThi);
+                    hienThi();
                     break;
 
                 case 0:

@@ -1,7 +1,5 @@
 package DichVu;
 
-import java.util.Locale;
-
 public enum LoaiThucAn {
     CHIEN,
     HAP,

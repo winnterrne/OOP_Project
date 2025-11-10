@@ -49,6 +49,6 @@ abstract public class NhanVien implements PhuCapThamNien {
     }
     
     public void xuatNhanVien(){
-        System.out.println("Ma nhan vien: " + maNV + " | Ho ten: " + hoTen + " | Chung minh nhan dan: " + cmnd + " | Loai cong viec: " + loaiCongViec + " | So ngay nghi: " +  soNgayNghi + " | Nam vao lam: " + namVaoLam);
+        System.out.println("Ma nhan vien: " + getMaNV() + " | Ho ten: " + getHoTen() + " | Chung minh nhan dan: " + getCmnd() + " | Loai cong viec: " + getLoaiCongViec() + " | So ngay nghi: " +  getSoNgayNghi() + " | Nam vao lam: " + getNamVaoLam());
     }
 }

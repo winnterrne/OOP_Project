@@ -7,7 +7,7 @@ public class QuanLiCSVC extends QuanLiChung{
     private List<CoSoVatChat> dsCoSoVatChat = new ArrayList<>();
     private Scanner sc = new Scanner(System.in);
     private int soLuongBBG, soLuongDCA, soLuongDCN;
-    private final String TEN_FILE = "cosovatchat.csv";
+    private final String TEN_FILE = "src/cosovatchat.csv";
 
     public String timMaLonNhat (String prefix){
         int max = 0;

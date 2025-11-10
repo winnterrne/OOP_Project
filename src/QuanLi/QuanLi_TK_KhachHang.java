@@ -7,7 +7,7 @@ import java.util.*;
 public class QuanLi_TK_KhachHang extends QuanLiChung {
     private Scanner sc = new Scanner(System.in);
     private ArrayList<KhachHang> dsKhachHang = new ArrayList<>();
-    private final String TEN_FILE = "KhachHang.csv"; // tên file mặc định
+    private final String TEN_FILE = "src/khachhang.csv"; // tên file mặc định
 
     // ------------------ CÁC CHỨC NĂNG CƠ BẢN ------------------
 

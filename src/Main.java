@@ -21,8 +21,8 @@ public class Main {
             System.out.println("3.Quan Li Hoa Don");
             System.out.println("4.Quan Li TK KH");
             System.out.println("5. QUan Li CSVT");
-            System.out.println("6. Thoat Chuong Trinh");
-
+            System.out.println("0. Thoat Chuong Trinh");
+            System.out.print("Mời chọn: ");
             choice = sc.nextInt();
             sc.nextLine();
             switch (choice) {

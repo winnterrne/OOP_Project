@@ -35,7 +35,7 @@ public class QuanLi extends NhanVien {
     @Override
     public void xuatNhanVien (){
         super.xuatNhanVien();
-        System.out.println("Phong ban: " + phongBan + " | Chi nhanh quan ly: " + chiNhanhQL + " | He so phu cap Quan ly: " + phuCapQL);
+        System.out.println("Phong ban: " + getPhongBan() + " | Chi nhanh quan ly: " + getChiNhanhQL() + " | He so phu cap Quan ly: " + getPhuCapQL());
     }
 
     @Override
@@ -60,6 +60,6 @@ public class QuanLi extends NhanVien {
         return "Danh gia cua quan ly: " + ketqua;
     }
     public String toCSV() {
-        return "QuanLi: " + super.toCSV() + "," + phongBan + "," + chiNhanhQL + "," +phuCapQL;
+        return "QuanLi, " + super.toCSV() + "," + phongBan + "," + chiNhanhQL + "," +phuCapQL;
     }
 }

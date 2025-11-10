@@ -43,7 +43,13 @@ abstract public class SanPham {
     public double tinhTien(int soLuong) {
         return soLuong * giaThanh;
     }
-    abstract public void xuatSanPham();
+    public void xuatSanPham(){
+        System.out.println("Ma San Pham: " + getMaSanPham());
+        System.out.println("Ten San Pham: " + getTenSanPham());
+        System.out.println("Gia Thanh: " + getGiaThanh());
+        System.out.println("So Luong: " + getSoLuong());
+    }
+    
     public String toCSV() {
         return maSanPham + "," + tenSanPham + "," + soLuong + "," + giaThanh;
     }

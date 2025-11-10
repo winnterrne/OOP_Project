@@ -42,13 +42,13 @@ public class NhanVienBanHang extends NhanVien {
     }
 
     public String toCSV() {
-        return "NhanVienBanHang: " + super.toCSV() + "," + doanhThu + "," + doanhThuToiThieu;
+        return "NhanVienBanHang, " + super.toCSV() + "," + doanhThu + "," + doanhThuToiThieu;
     }
 
     @Override
     public void xuatNhanVien() {
         super.xuatNhanVien();
-        System.out.println("Doanh Thu: " + doanhThu);
-        System.out.println("Doanh Thu Toi Thieu: " + doanhThuToiThieu);
+        System.out.println("Doanh Thu: " + getDoanhThu());
+        System.out.println("Doanh Thu Toi Thieu: " + getDoanhThuToiThieu());
     }
 }

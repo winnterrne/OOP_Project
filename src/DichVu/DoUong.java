@@ -38,16 +38,13 @@ public class DoUong extends SanPham{
 
     @Override
     public String toCSV() {
-        return "ThucAn: " + super.toCSV() + "," + donViTinh + "," + dungTich;
+        return "DoUong, " + super.toCSV() + "," + donViTinh + "," + dungTich;
     }
 
     @Override
     public void xuatSanPham() {
         System.out.println("---------------------------------------------------------");
-        System.out.println("Ma San Pham: " + getMaSanPham());
-        System.out.println("Ten San Pham: " + getTenSanPham());
-        System.out.println("Gia Thanh: " + getGiaThanh());
-        System.out.println("So Luong: " + getSoLuong());
+        super.xuatSanPham();
         System.out.println("Loai: " + donViTinh);
         System.out.println("Dung Tich: " + dungTich);
     }

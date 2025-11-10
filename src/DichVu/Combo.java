@@ -72,7 +72,7 @@ public class Combo extends SanPham implements KhuyenMai{
 
     @Override
     public String toCSV() {
-        return "Combo: " + super.toCSV() + "," + soLuongMon + "," + luongNguoiAn;
+        return "Combo, " + super.toCSV() + "," + soLuongMon + "," + luongNguoiAn;
     }
 
     @Override

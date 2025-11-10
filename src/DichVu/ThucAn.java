@@ -45,16 +45,13 @@ public class ThucAn extends SanPham {
 
     @Override
     public String toCSV() {
-        return "DoUong: " + super.toCSV() + "," + nguyenLieu + "," + thoiGianChuanBi;
+        return "ThucAn, " + super.toCSV() + "," + nguyenLieu + "," + thoiGianChuanBi;
     }
 
     @Override
     public void xuatSanPham() {
         System.out.println("----------------------------------------------------");
-        System.out.println("Ma San Pham: " + getMaSanPham());
-        System.out.println("Ten San Pham: " + getTenSanPham());
-        System.out.println("Gia Thanh: " + getGiaThanh());
-        System.out.println("So Luong: " + getSoLuong());
+        super.xuatSanPham();
         System.out.println("Nguyen Lieu: " + nguyenLieu);
         System.out.println("Thoi Gian Chuan Bi: " + thoiGianChuanBi);
     }
