@@ -4,7 +4,7 @@ abstract public class NhanVien implements PhuCapThamNien {
     protected String maNV, hoTen, loaiCongViec, cmnd;
     protected int soNgayNghi, namVaoLam;
     protected double heSoLuong;
-    protected static final int luongCoBan = 4000000;
+    protected static final double luongCoBan = 4000000;
 
     public String getMaNV () {return maNV;}
     public void setMaNV (String maNV) {this.maNV = maNV;}
@@ -50,5 +50,11 @@ abstract public class NhanVien implements PhuCapThamNien {
     
     public void xuatNhanVien(){
         System.out.println("Ma nhan vien: " + getMaNV() + " | Ho ten: " + getHoTen() + " | Chung minh nhan dan: " + getCmnd() + " | Loai cong viec: " + getLoaiCongViec() + " | So ngay nghi: " +  getSoNgayNghi() + " | Nam vao lam: " + getNamVaoLam());
+    }
+    public void xuatLuongNhanVien() {
+        System.out.println("Ma nhan vien: " + getMaNV() + " | Ho ten: " + getHoTen());
+    }
+    public void xuatNhanVienTheoXepLoai() {
+        System.out.println("Ma nhan vien: " + getMaNV() + " | Ho ten: " + getHoTen());
     }
 }

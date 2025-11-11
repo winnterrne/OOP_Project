@@ -69,6 +69,12 @@ public class QuanLiNhanVien extends QuanLiChung {
         System.out.println("Đã sắp xếp nhân viên theo mã nhân viên");
     }
 
+    public void sapXepNVTheoLuong() {
+        dsNhanVien.sort(Comparator.comparing(NhanVien::tinhLuong));
+        System.out.println("Da Sap Xep Nhan Vien Theo Luong: ");
+    }
+
+
     public void hienThi() {
         if (dsNhanVien.isEmpty()) {
             System.out.println("Danh sach rong!");
@@ -81,6 +87,27 @@ public class QuanLiNhanVien extends QuanLiChung {
         System.out.println("Tổng số nhân viên: " + tongSoNhanVien);
     }
 
+    public void hienThiLuong() {
+        if(dsNhanVien.isEmpty()) {
+            System.out.println("Danh sach rong! ");
+            return;
+        }
+        for (NhanVien nv : dsNhanVien) {
+            nv.xuatLuongNhanVien();
+        }
+    }
+    public void hienthiTheoLoai() {
+        if (dsNhanVien.isEmpty()) {
+            System.out.println("Danh sach rong !");
+            return;
+        }
+        for(NhanVien nv : dsNhanVien) {
+            nv.xuatNhanVienTheoXepLoai();
+        }
+    }
+
+
+
     // =====================================
     // DOC FILE CSV
     // =====================================
@@ -92,7 +119,7 @@ public class QuanLiNhanVien extends QuanLiChung {
 
             while ((dong = br.readLine()) != null) {
                 String[] arr = dong.split(",");
-                if (arr.length < 7) continue;
+                if (arr.length < 8) continue;
 
                 String loai = arr[0];
                 String maNV = arr[1];
@@ -160,6 +187,7 @@ public class QuanLiNhanVien extends QuanLiChung {
             System.out.println("4. Tim kiem nhan vien");
             System.out.println("5. Sap xep nhan vien theo luong");
             System.out.println("6. Hien thi danh sach nhan vien");
+            System.out.println("7. Hien thi theo xep loai");
             System.out.println("0. Thoat");
             System.out.print("Nhap lua chon: ");
             choice = sc.nextInt();
@@ -171,11 +199,12 @@ public class QuanLiNhanVien extends QuanLiChung {
                 case 3 -> suaNhanVien();
                 case 4 -> timNhanVien();
                 case 5 -> {
-                    sapXepNVTheoMa();
-                    System.out.println("Da sap xep nhan vien theo ma!");
+                    sapXepNVTheoLuong();
+                    hienThiLuong();
                     ghiFile(TEN_FILE);
                 }
                 case 6 -> hienThi();
+                case 7 -> hienthiTheoLoai();
                 case 0 -> System.out.println("Thoat khoi menu quan li nhan vien.");
                 default -> System.out.println("Lua chon khong hop le!");
             }

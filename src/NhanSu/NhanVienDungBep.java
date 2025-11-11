@@ -45,6 +45,18 @@ public class NhanVienDungBep extends NhanVien {
         else return 0;
     }
     public String toCSV() {
-        return "NhanVienDungBep," + super.toCSV() + "," + soLuongOrder + "," + quayPhuTrach;
+        return "NhanVienDungBep, " + super.toCSV() + "," + soLuongOrder + "," + quayPhuTrach;
+    }
+
+    @Override
+    public void xuatLuongNhanVien() {
+        super.xuatLuongNhanVien();
+        System.out.println("Luong: " + tinhLuong());
+    }
+
+    @Override
+    public void xuatNhanVienTheoXepLoai() {
+        super.xuatNhanVienTheoXepLoai();
+        System.out.println("Loai: " + xepLoai());
     }
 }

@@ -45,7 +45,7 @@ public class QuanLi extends NhanVien {
         else return 0;
     }
 
-    public String danhGiaNhanVien (NhanVien nv){
+    public void danhGiaNhanVien (NhanVien nv){
         String ketqua = "";
         if (nv instanceof NhanVienBanHang){
             NhanVienBanHang bh = (NhanVienBanHang) nv;
@@ -56,9 +56,21 @@ public class QuanLi extends NhanVien {
             if (bep.getSoLuongOrder() >= 100) ketqua = "Nhan vien bep nang suat cao";
             else ketqua = "Can cai thien nang suat che bien";
         }else ketqua = "Nhan vien chua co du lieu danh gia";
-        return "Danh gia cua quan ly: " + ketqua;
+        System.out.println("Danh gia cua quan ly: " + ketqua);
     }
     public String toCSV() {
-        return "QuanLi," + super.toCSV() + "," + phongBan + "," + chiNhanhQL + "," +phuCapQL;
+        return "QuanLi, " + super.toCSV() + "," + phongBan + "," + chiNhanhQL + "," +phuCapQL;
+    }
+
+    @Override
+    public void xuatLuongNhanVien() {
+        super.xuatLuongNhanVien();
+        System.out.println("Luong: " + tinhLuong());
+    }
+
+    @Override
+    public void xuatNhanVienTheoXepLoai() {
+        super.xuatNhanVienTheoXepLoai();
+        System.out.println("Loai: " + xepLoai());
     }
 }

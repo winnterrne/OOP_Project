@@ -1,5 +1,7 @@
 package NhanSu;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.time.LocalDate;
 
 public class NhanVienBanHang extends NhanVien {
@@ -42,7 +44,7 @@ public class NhanVienBanHang extends NhanVien {
     }
 
     public String toCSV() {
-        return "NhanVienBanHang," + super.toCSV() + "," + doanhThu + "," + doanhThuToiThieu;
+        return "NhanVienBanHang, " + super.toCSV() + "," + doanhThu + "," + doanhThuToiThieu;
     }
 
     @Override
@@ -50,5 +52,17 @@ public class NhanVienBanHang extends NhanVien {
         super.xuatNhanVien();
         System.out.println("Doanh Thu: " + getDoanhThu());
         System.out.println("Doanh Thu Toi Thieu: " + getDoanhThuToiThieu());
+    }
+
+    @Override
+    public void xuatLuongNhanVien() {
+        super.xuatLuongNhanVien();
+        System.out.println("Luong: " + tinhLuong());
+    }
+
+    @Override
+    public void xuatNhanVienTheoXepLoai() {
+        super.xuatNhanVienTheoXepLoai();
+        System.out.println("Loai: " + xepLoai());
     }
 }
