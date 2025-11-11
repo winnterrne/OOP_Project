@@ -15,18 +15,17 @@ public class QuanLiHoaDon extends QuanLiChung{
     public void setTongSoHoaDon(int tongSoHoaDon) {this.tongSoHoaDon = tongSoHoaDon;}
     private Scanner sc = new Scanner(System.in);
     private final String TEN_FILE = "src/hoadon.csv";
-    private QuanLiSanPham qlsp; // Thêm tham chiếu đến QuanLiSanPham
+    private QuanLiSanPham qlsp;
 
     public QuanLiHoaDon() {
-        qlsp = new QuanLiSanPham(); // Khởi tạo QuanLiSanPham nội bộ
-        qlsp.docFile("src/sanpham.csv"); // Tải dsSanPham từ file
-        // Các khởi tạo khác giữ nguyên
+        qlsp = new QuanLiSanPham();
+        qlsp.docFile("src/sanpham.csv");
     }
 
     public double tinhDoanhThuTheoNgay(String ngay) {
         return dsHoaDon.stream()
                 .filter(dh -> dh.getNgayXuatHoaDon().equals(ngay))
-                .mapToDouble(HoaDon::tongTienSauKhuyenMai)
+                .mapToDouble(HoaDon::apDungKhuyenMai)
                 .sum();
     }
 
@@ -183,10 +182,13 @@ public class QuanLiHoaDon extends QuanLiChung{
                     System.out.print("Nhập số lượng: ");
                     int soLuong = Integer.parseInt(sc.nextLine().trim());
 
-                    SanPham sp = qlsp.dsSanPham.stream()
-                            .filter(s -> s.getMaSanPham().equalsIgnoreCase(maSP))
-                            .findFirst()
-                            .orElse(null);
+                    SanPham sp = null;
+                    for (SanPham s : qlsp.dsSanPham) {
+                        if (s.getMaSanPham().equalsIgnoreCase(maSP)) {
+                            sp = s;
+                            break;
+                        }
+                    }
                     if (sp == null) {
                         System.out.println("Không tìm thấy sản phẩm có mã: " + maSP);
                         break;
@@ -234,10 +236,13 @@ public class QuanLiHoaDon extends QuanLiChung{
                 String mavc = p[1].trim();
                 String nxhd = p[2].trim();
 
-                HoaDon hd = dsHoaDon.stream()
-                    .filter(h -> h.getMaHoaDon().equalsIgnoreCase(mahd))
-                    .findFirst()
-                    .orElse(null);
+                HoaDon hd = null;
+                for (HoaDon hdon : dsHoaDon){
+                    if (hdon.getMaHoaDon().equalsIgnoreCase(mahd)){
+                        hd = hdon;
+                        break;
+                    }
+                }
                 
                 if (hd == null) {
                     hd = new HoaDon(mahd, mavc, nxhd);
@@ -255,10 +260,13 @@ public class QuanLiHoaDon extends QuanLiChung{
                         continue;
                     }
 
-                    SanPham sp = qlsp.dsSanPham.stream()
-                            .filter(s -> s.getMaSanPham().equalsIgnoreCase(maSP))
-                            .findFirst()
-                            .orElse(null);
+                    SanPham sp = null;
+                    for (SanPham s : qlsp.dsSanPham){
+                        if (s.getMaSanPham().equalsIgnoreCase(maSP)){
+                            sp = s;
+                            break;
+                        }
+                    }
                     if (sp == null) {
                         System.out.println("Không tìm thấy sản phẩm có mã: " + maSP);
                         continue;
@@ -287,7 +295,7 @@ public class QuanLiHoaDon extends QuanLiChung{
 
             while ((line = br.readLine()) != null) {
                 String[] p = line.split(",");
-                if (p.length < 4) continue; // Cần ít nhất 4 cột: MaDH, MaHD, MaSP, SoLuong
+                if (p.length < 4) continue;
 
                 String maDH = p[0].trim();
                 String maHD = p[1].trim();
@@ -300,10 +308,13 @@ public class QuanLiHoaDon extends QuanLiChung{
                     continue;
                 }
 
-                SanPham sp = qlsp.dsSanPham.stream()
-                        .filter(s -> s.getMaSanPham().equalsIgnoreCase(maSP))
-                        .findFirst()
-                        .orElse(null);
+                SanPham sp = null;
+                for (SanPham s : qlsp.dsSanPham){
+                    if (s.getMaSanPham().equalsIgnoreCase(maSP)){
+                        sp = s;
+                        break;
+                    }
+                }
                 if (sp == null) {
                     System.out.println("Không tìm thấy sản phẩm có mã: " + maSP);
                     continue;
@@ -311,10 +322,13 @@ public class QuanLiHoaDon extends QuanLiChung{
 
                 DonHang dh = new DonHang(sp, soLuong, maDH);
 
-                HoaDon hd = dsHoaDon.stream()
-                        .filter(h -> h.getMaHoaDon().equalsIgnoreCase(maHD))
-                        .findFirst()
-                        .orElse(null);
+                HoaDon hd = null;
+                for (HoaDon hdon : dsHoaDon){
+                    if (hdon.getMaHoaDon().equalsIgnoreCase(maHD)){
+                        hd = hdon;
+                        break;
+                    }
+                }
                 if (hd == null) {
                     hd = new HoaDon();
                     hd.setMaHoaDon(maHD);
