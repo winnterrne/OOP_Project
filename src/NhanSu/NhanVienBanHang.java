@@ -13,7 +13,7 @@ public class NhanVienBanHang extends NhanVien {
     public NhanVienBanHang (String maNV, String hoTen, String loaiCongViec, String cmnd, 
                        int soNgayNghi, int thamNien, double doanhThu, double doanhThuToiThieu, double heSoLuong){
         super(hoTen, loaiCongViec, cmnd, soNgayNghi, thamNien, heSoLuong);
-        this.maNV = maNV;  // CHỈ GÁN THẲNG, KHÔNG ÉP GÌ HẾT!!!
+        this.maNV = maNV;
         this.doanhThu = doanhThu;
         this.doanhThuToiThieu = doanhThuToiThieu;
     }
