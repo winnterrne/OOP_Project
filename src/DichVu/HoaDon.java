@@ -51,18 +51,24 @@ public class HoaDon implements KhuyenMai{
 
     @Override
     public double apDungKhuyenMai() {
-        double giaGoc = tinhTongTien();
-        java.time.DayOfWeek ngay = java.time.LocalDate.now().getDayOfWeek();
-        if(ngay == DayOfWeek.TUESDAY) {
-            return giaGoc * 0.85;
+        if (ngayXuatHoaDon == null || ngayXuatHoaDon.isEmpty()) return 1.0;
+
+        try {
+            java.time.LocalDate date = java.time.LocalDate.parse(ngayXuatHoaDon, 
+                    java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            java.time.DayOfWeek day = date.getDayOfWeek();
+
+            if (day == DayOfWeek.TUESDAY) {
+                return 0.85;
+            }
+        } catch (Exception e) {
         }
-        return giaGoc;
+        return 1.0;
     }
-
-    /*public double tongTienSauKhuyenMai() {
+    
+    public double tongTienSauKhuyenMai() {
         return tinhTongTien() * apDungKhuyenMai();
-    }*/
-
+    }
     public void inHoaDon() {
         System.out.println("===== HÓA ĐƠN =====");
         for (DonHang dh : dsDonHang) {
@@ -71,7 +77,7 @@ public class HoaDon implements KhuyenMai{
         System.out.println("Tổng cộng: " + tinhTongTien());
         System.out.println("===================");
         System.out.println();
-        System.out.println("Tong Hoa Don: " + apDungKhuyenMai());
+        System.out.println("Tong Hoa Don: " + tongTienSauKhuyenMai());
         System.out.println("===================");
     }
 
@@ -82,7 +88,7 @@ public class HoaDon implements KhuyenMai{
     @Override
     public String toString() {
         return "Hóa đơn " + maHoaDon + " - Ngày: " + ngayXuatHoaDon + 
-            " - Tổng: " + String.format("%,.0f", apDungKhuyenMai()) + "đ";
+            " - Tổng: " + String.format("%,.0f", tongTienSauKhuyenMai()) + "đ";
     }
 
     public String toCSV() {
