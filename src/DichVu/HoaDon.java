@@ -77,7 +77,7 @@ public class HoaDon implements KhuyenMai{
         System.out.println("Tổng cộng: " + tinhTongTien());
         System.out.println("===================");
         System.out.println();
-        System.out.println("Tong Hoa Don: " + tongTienSauKhuyenMai());
+        System.out.println("Tổng Hóa Đơn: " + tongTienSauKhuyenMai());
         System.out.println("===================");
     }
 
@@ -88,7 +88,7 @@ public class HoaDon implements KhuyenMai{
     @Override
     public String toString() {
         return "Hóa đơn " + maHoaDon + " - Ngày: " + ngayXuatHoaDon + 
-            " - Tổng: " + String.format("%,.0f", tongTienSauKhuyenMai()) + "đ";
+            " - Tổng: " + String.format("%,.0f", tongTienSauKhuyenMai()) + "đ" + " : ";
     }
 
     public String toCSV() {

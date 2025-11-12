@@ -45,7 +45,7 @@ public class DoUong extends SanPham{
     public void xuatSanPham() {
         System.out.println("---------------------------------------------------------");
         super.xuatSanPham();
-        System.out.println("Loai: " + donViTinh);
-        System.out.println("Dung Tich: " + dungTich);
+        System.out.println("Loại: " + donViTinh);
+        System.out.println("Dung Tích: " + dungTich);
     }
 }

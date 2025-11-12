@@ -17,12 +17,14 @@ import java.io.IOException;
 
 public class QuanLiNhanVien extends QuanLiChung {
     private int tongSoNhanVien;
+    private QuanLi quanLi;
     private List<NhanVien> dsNhanVien = new ArrayList<>();
     private Scanner sc = new Scanner(System.in);
     private final String TEN_FILE = "src/nhanvien.csv";
 
     public QuanLiNhanVien() {
         super();
+        this.quanLi = new QuanLi();
         tongSoNhanVien = 0;
     }
 
@@ -66,12 +68,12 @@ public class QuanLiNhanVien extends QuanLiChung {
 
     public void sapXepNVTheoMa() {
         dsNhanVien.sort(Comparator.comparing(NhanVien::getMaNV));
-        System.out.println("Đã sắp xếp nhân viên theo mã nhân viên");
+        System.out.println("Đã sắp xếp nhân viên theo mã nhân viên ");
     }
 
     public void sapXepNVTheoLuong() {
         dsNhanVien.sort(Comparator.comparing(NhanVien::tinhLuong));
-        System.out.println("Da Sap Xep Nhan Vien Theo Luong: ");
+        System.out.println("Đã Sắp Xếp Nhân Viên Theo Lương : ");
     }
 
 
@@ -150,7 +152,7 @@ public class QuanLiNhanVien extends QuanLiChung {
                 if (nv != null) dsNhanVien.add(nv);
             }
 
-            System.out.println("Da doc file thanh cong (" + dsNhanVien.size() + " nhan vien).");
+            System.out.println("Da doc file thanh cong (" + dsNhanVien.size() + " nhân viên).");
         } catch (IOException e) {
             System.out.println("Loi khi doc file: " + e.getMessage());
         }
@@ -180,16 +182,17 @@ public class QuanLiNhanVien extends QuanLiChung {
         int choice;
         docFile(TEN_FILE);
         do {
-            System.out.println("\n===== MENU QUAN LI NHAN VIEN =====");
-            System.out.println("1. Them nhan vien");
-            System.out.println("2. Xoa nhan vien");
-            System.out.println("3. Sua thong tin nhan vien");
-            System.out.println("4. Tim kiem nhan vien");
-            System.out.println("5. Sap xep nhan vien theo luong");
-            System.out.println("6. Hien thi danh sach nhan vien");
-            System.out.println("7. Hien thi theo xep loai");
+            System.out.println("\n===== MENU QUẢN LÍ NHÂN VIÊN =====");
+            System.out.println("1. Thêm nhân viên ");
+            System.out.println("2. Xóa nhân viên ");
+            System.out.println("3. Sửa thông tin nhân viên ");
+            System.out.println("4. Tìm kiếm nhân viên ");
+            System.out.println("5. Sắp xếp nhân viên theo lương ");
+            System.out.println("6. Hiển thị danh sách nhiên viên ");
+            System.out.println("7. Hiện thị danh sách nhân viên theo xếp loại ");
+            System.out.println("8. Đánh giá nhân viên ");
             System.out.println("0. Thoat");
-            System.out.print("Nhap lua chon: ");
+            System.out.print("Nhập lựa chọn: ");
             choice = sc.nextInt();
             sc.nextLine();
 
@@ -205,7 +208,8 @@ public class QuanLiNhanVien extends QuanLiChung {
                 }
                 case 6 -> hienThi();
                 case 7 -> hienthiTheoLoai();
-                case 0 -> System.out.println("Thoat khoi menu quan li nhan vien.");
+                case 8 -> danhgiaNhanVien();
+                case 0 -> System.out.println("Thoát khỏi menu quản lí nhân viên.");
                 default -> System.out.println("Lua chon khong hop le!");
             }
         } while (choice != 0);
@@ -215,57 +219,57 @@ public class QuanLiNhanVien extends QuanLiChung {
     // CAC PHUONG THUC CON
     // =====================================
     private void themNhanVien() {
-        System.out.println("\nChon loai nhan vien muon them:");
-        System.out.println("1. Nhan vien ban hang");
-        System.out.println("2. Nhan vien dung bep");
-        System.out.println("3. Nhan vien quan li");
-        System.out.print("Nhap lua chon: ");
+        System.out.println("\nChọn loại nhân viên muốn thêm: ");
+        System.out.println("1. Nhân viên bán hàng ");
+        System.out.println("2. Nhân viên đứng bếp ");
+        System.out.println("3. Nhân viên quản lí ");
+        System.out.print("Nhập lựa chọn: ");
         int loaiNV = sc.nextInt();
         sc.nextLine();
         String maNV;
         do{
-            System.out.print("Nhap ma NV: ");
+            System.out.print("Nhập mã Nhân Viên : ");
             maNV = sc.nextLine();
             if (timKiem(maNV) != null)
                 System.out.println("Mã nhân viên đã tồn tại, vui lòng nhập lại!");
         }while (timKiem(maNV) != null);
-        System.out.print("Nhap ho ten: ");
+        System.out.print("Nhập họ và tên : ");
         String hoTen = sc.nextLine();
-        System.out.print("Nhap loai cong viec: ");
+        System.out.print("Nhập loại công việc : ");
         String loaiCV = sc.nextLine();
-        System.out.print("Nhap CMND: ");
+        System.out.print("Nhập CMND : ");
         String cmnd = sc.nextLine();
-        System.out.print("Nhap so ngay nghi: ");
+        System.out.print("Nhập số ngày nghỉ : ");
         int ngayNghi = sc.nextInt();
-        System.out.print("Nhap nam vao lam: ");
+        System.out.print("Nhập năm vào làm : ");
         int namVaoLam = sc.nextInt();
-        System.out.print("Nhap he so luong: ");
+        System.out.print("Nhập hệ số lương : ");
         double heSo = sc.nextDouble();
         sc.nextLine();
 
         NhanVien nv = null;
         switch (loaiNV) {
             case 1 -> {
-                System.out.print("Nhap doanh thu: ");
+                System.out.print("Nhập doanh thu : ");
                 double doanhThu = sc.nextDouble();
-                System.out.print("Nhap doanh thu toi thieu: ");
+                System.out.print("Nhập doanh thu tối thiểu : ");
                 double doanhThuMin = sc.nextDouble();
                 nv = new NhanVienBanHang(maNV, hoTen, loaiCV, cmnd, ngayNghi, namVaoLam, doanhThu, doanhThuMin, heSo);
             }
             case 2 -> {
-                System.out.print("Nhap so luong order: ");
+                System.out.print("Nhập số order : ");
                 int soLuongOrder = sc.nextInt();
                 sc.nextLine();
-                System.out.print("Nhap quay phu trach: ");
+                System.out.print("Nhập quầy phụ trách : ");
                 String quayPhuTrach = sc.nextLine();
                 nv = new NhanVienDungBep(maNV, hoTen, loaiCV, cmnd, ngayNghi, namVaoLam, heSo, soLuongOrder, quayPhuTrach);
             }
             case 3 -> {
-                System.out.print("Nhap phong ban: ");
+                System.out.print("Nhập phòng ban : ");
                 String phongBan = sc.nextLine();
-                System.out.print("Nhap chi nhanh quan ly: ");
+                System.out.print("Nhập chi nhánh quản lí : ");
                 String chiNhanhQL = sc.nextLine();
-                System.out.print("Nhap phu cap quan ly: ");
+                System.out.print("Nhập phụ cấp quản lí ");
                 double phuCapQL = sc.nextDouble();
                 nv = new QuanLi(maNV, hoTen, loaiCV, cmnd, ngayNghi, namVaoLam, heSo, phongBan, chiNhanhQL, phuCapQL);
             }
@@ -275,67 +279,67 @@ public class QuanLiNhanVien extends QuanLiChung {
         if (nv != null) {
             them(nv);
             ghiFile(TEN_FILE);
-            System.out.println("Da them nhan vien!");
+            System.out.println("Đã thêm nhân viên !");
         }
     }
 
     private void xoaNhanVien() {
-        System.out.print("Nhap ma nhan vien can xoa: ");
+        System.out.print("Nhập mã nhân viên cần xóa : ");
         String ma = sc.nextLine();
         xoa(ma);
         ghiFile(TEN_FILE);
-        System.out.println("Da xoa nhan vien neu ton tai.");
+        System.out.println("Đã xóa nếu nhân viên tồn tại! ");
     }
 
     private void suaNhanVien() {
-        System.out.println("\nChon loai nhan vien muon sua:");
-        System.out.println("1. Nhan vien ban hang");
-        System.out.println("2. Nhan vien dung bep");
-        System.out.println("3. Nhan vien quan li");
-        System.out.print("Nhap lua chon: ");
+        System.out.println("\nChọn loại nhân viên muốn sửa thông tin: ");
+        System.out.println("1. Nhân viên bán hàng ");
+        System.out.println("2. Nhân viên đứng bếp ");
+        System.out.println("3. Nhân viên quản lí ");
+        System.out.print("Nhập lựa chọn: ");
         int loaiNV = sc.nextInt();
         sc.nextLine();
 
-        System.out.print("Nhap ma nhan vien can sua: ");
+        System.out.print("Nhập mã nhân viên cần sửa: ");
         String maNV = sc.nextLine();
         
-        System.out.print("Nhap ho ten moi: ");
+        System.out.print("Nhập họ và tên mới: ");
         String hoTen = sc.nextLine();
-        System.out.print("Nhap loai cong viec moi: ");
+        System.out.print("Nhập loại công việc mới: ");
         String loaiCV = sc.nextLine();
-        System.out.print("Nhap CMND moi: ");
+        System.out.print("Nhập CMND mới: ");
         String cmnd = sc.nextLine();
-        System.out.print("Nhap so ngay nghi moi: ");
+        System.out.print("Nhập số ngày nghỉ mới: ");
         int ngayNghi = sc.nextInt();
-        System.out.print("Nhap nam vao lam moi: ");
+        System.out.print("Nhập năm vào làm mới: ");
         int namVaoLam = sc.nextInt();
-        System.out.print("Nhap he so luong moi: ");
+        System.out.print("Nhập hệ số lương mới: ");
         double heSo = sc.nextDouble();
         sc.nextLine();
 
         NhanVien nvMoi = null;
         switch (loaiNV) {
             case 1 -> {
-                System.out.print("Nhap doanh thu moi: ");
+                System.out.print("Nhập doanh thu mới: ");
                 double doanhThu = sc.nextDouble();
-                System.out.print("Nhap doanh thu toi thieu moi: ");
+                System.out.print("Nhập doanh thu tối thiểu: ");
                 double doanhThuMin = sc.nextDouble();
                 nvMoi = new NhanVienBanHang(maNV, hoTen, loaiCV, cmnd, ngayNghi, namVaoLam, doanhThu, doanhThuMin, heSo);
             }
             case 2 -> {
-                System.out.print("Nhap so luong order moi: ");
+                System.out.print("Nhập số lượng order mới: ");
                 int soLuongOrder = sc.nextInt();
                 sc.nextLine();
-                System.out.print("Nhap quay phu trach moi: ");
+                System.out.print("Nhập quầy phụ trách mới: ");
                 String quayPhuTrach = sc.nextLine();
                 nvMoi = new NhanVienDungBep(maNV, hoTen, loaiCV, cmnd, ngayNghi, namVaoLam, heSo, soLuongOrder, quayPhuTrach);
             }
             case 3 -> {
-                System.out.print("Nhap phong ban moi: ");
+                System.out.print("Nhập phòng ban mới: ");
                 String phongBan = sc.nextLine();
-                System.out.print("Nhap chi nhanh quan ly moi: ");
+                System.out.print("Nhập chi nhánh quản lí mới: ");
                 String chiNhanhQL = sc.nextLine();
-                System.out.print("Nhap phu cap quan ly moi: ");
+                System.out.print("Nhập phụ cấp quản lí mới: ");
                 double phuCapQL = sc.nextDouble();
                 nvMoi = new QuanLi(maNV, hoTen, loaiCV, cmnd, ngayNghi, namVaoLam, heSo, phongBan, chiNhanhQL, phuCapQL);
             }
@@ -345,19 +349,48 @@ public class QuanLiNhanVien extends QuanLiChung {
         if (nvMoi != null) {
             sua(maNV, nvMoi);
             ghiFile(TEN_FILE);
-            System.out.println("Da sua thong tin nhan vien thanh cong!");
+            System.out.println("Đã sửa thông tin nhân viên thành công !");
         }
     }
 
     private void timNhanVien() {
-        System.out.print("Nhap ma nhan vien can tim: ");
+        System.out.print("Nhập mã nhân viên cần tìm: ");
         String ma = sc.nextLine();
         Object obj = timKiem(ma);
         if (obj instanceof NhanVien nv) {
-            System.out.println("Tim thay nhan vien:");
+            System.out.println("Tìm thấy nhân viên: ");
             nv.xuatNhanVien();
         } else {
-            System.out.println("Khong tim thay nhan vien co ma " + ma);
+            System.out.println("Không tìm thấy nhân viên có mã: " + ma);
         }
     }
-}
+
+    public void danhgiaNhanVien() {
+            System.out.println("=== DANH SÁCH ĐÁNH GIÁ NHÂN VIÊN ===");
+            System.out.println("\n--- Nhân viên bán hàng ---");
+            for (NhanVien nhanVien : dsNhanVien) {
+                if (nhanVien instanceof NhanVienBanHang) {
+                    quanLi.danhGiaNhanVien(nhanVien);
+                    System.out.println();
+                }
+            }
+            System.out.println("\n--- Nhân viên đứng bếp ---");
+            for (NhanVien nhanVien : dsNhanVien) {
+                if (nhanVien instanceof NhanVienDungBep) {
+                    quanLi.danhGiaNhanVien(nhanVien);
+                    System.out.println();
+                }
+            }
+            System.out.println("\n--- Nhân viên khác ---");
+            for (NhanVien nhanVien : dsNhanVien) {
+                if (!(nhanVien instanceof NhanVienBanHang) && !(nhanVien instanceof NhanVienDungBep)) {
+                    quanLi.danhGiaNhanVien(nhanVien);
+                    System.out.println();
+                }
+            }
+        }
+
+    }
+
+
+

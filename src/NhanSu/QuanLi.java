@@ -13,6 +13,10 @@ public class QuanLi extends NhanVien {
     public double getPhuCapQL () {return phuCapQL;}
     public void setPhuCapQL (double phuCapQL) {this.phuCapQL = phuCapQL;}
 
+    public QuanLi() {
+
+    }
+
     public QuanLi (String maNV, String hoTen, String loaiCongViec, String cmnd, int soNgayNghi, int namVaoLam, double heSoLuong, String phongBan, String chiNhanhQL, double phuCapQL){
         super(hoTen, loaiCongViec, cmnd, soNgayNghi, namVaoLam, heSoLuong);
         this.maNV = maNV;
@@ -46,17 +50,15 @@ public class QuanLi extends NhanVien {
     }
 
     public void danhGiaNhanVien (NhanVien nv){
-        String ketqua = "";
-        if (nv instanceof NhanVienBanHang){
-            NhanVienBanHang bh = (NhanVienBanHang) nv;
-            if (bh.getDoanhThu() >= bh.getDoanhThuToiThieu()) ketqua = "Hoan thanh tot doanh thu";
-            else ketqua = "Chua dat doanh thu yeu cau";
-        }else if (nv instanceof NhanVienDungBep){
-            NhanVienDungBep bep = (NhanVienDungBep) nv;
-            if (bep.getSoLuongOrder() >= 100) ketqua = "Nhan vien bep nang suat cao";
-            else ketqua = "Can cai thien nang suat che bien";
-        }else ketqua = "Nhan vien chua co du lieu danh gia";
-        System.out.println("Danh gia cua quan ly: " + ketqua);
+        String ketqua;
+        if (nv instanceof NhanVienBanHang bh){
+            if (bh.getDoanhThu() >= bh.getDoanhThuToiThieu()) ketqua = bh.getMaNV() + " | " + bh.getHoTen() + " : "  + " Hoàn thành tốt doanh thu ";
+            else ketqua = "Chưa đạt doanh thu ";
+        }else if (nv instanceof NhanVienDungBep bep){
+            if (bep.getSoLuongOrder() >= 100) ketqua = bep.getMaNV() + " | " + bep.getHoTen() + " : " + "Nhân viên bếp năng xuất cao ";
+            else ketqua = "Cần cãi thiện năng xuất chế biến ";
+        }else ketqua = "Nhân viên chưa có dữ liệu đánh giá ";
+        System.out.println("Đánh giá của quản lí: " + ketqua);
     }
     public String toCSV() {
         return "QuanLi, " + super.toCSV() + "," + phongBan + "," + chiNhanhQL + "," +phuCapQL;
@@ -65,12 +67,12 @@ public class QuanLi extends NhanVien {
     @Override
     public void xuatLuongNhanVien() {
         super.xuatLuongNhanVien();
-        System.out.println("Luong: " + tinhLuong());
+        System.out.println("Lương: " + tinhLuong());
     }
 
     @Override
     public void xuatNhanVienTheoXepLoai() {
         super.xuatNhanVienTheoXepLoai();
-        System.out.println("Loai: " + xepLoai());
+        System.out.println("Xếp loại: " + xepLoai());
     }
 }

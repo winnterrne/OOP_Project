@@ -49,12 +49,12 @@ abstract public class NhanVien implements PhuCapThamNien {
     }
     
     public void xuatNhanVien(){
-        System.out.println("Ma nhan vien: " + getMaNV() + " | Ho ten: " + getHoTen() + " | Chung minh nhan dan: " + getCmnd() + " | Loai cong viec: " + getLoaiCongViec() + " | So ngay nghi: " +  getSoNgayNghi() + " | Nam vao lam: " + getNamVaoLam());
+        System.out.println("Mã nhân viên: " + getMaNV() + " | Họ và tên: " + getHoTen() + " | CMND:  " + getCmnd() + " | Loại công việc: " + getLoaiCongViec() + " | Số ngày nghỉ: " +  getSoNgayNghi() + " | Năm vào làm: " + getNamVaoLam());
     }
     public void xuatLuongNhanVien() {
-        System.out.println("Ma nhan vien: " + getMaNV() + " | Ho ten: " + getHoTen());
+        System.out.println("Mã nhân viên: " + getMaNV() + " | Họ và tên: " + getHoTen());
     }
     public void xuatNhanVienTheoXepLoai() {
-        System.out.println("Ma nhan vien: " + getMaNV() + " | Ho ten: " + getHoTen());
+        System.out.println("Mã nhân viên: " + getMaNV() + " | Họ và tên: " + getHoTen());
     }
 }

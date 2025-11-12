@@ -51,18 +51,18 @@ public class NhanVienBanHang extends NhanVien {
     public void xuatNhanVien() {
         super.xuatNhanVien();
         System.out.println("Doanh Thu: " + getDoanhThu());
-        System.out.println("Doanh Thu Toi Thieu: " + getDoanhThuToiThieu());
+        System.out.println("Doanh Thu Tối Thiểu: " + getDoanhThuToiThieu());
     }
 
     @Override
     public void xuatLuongNhanVien() {
         super.xuatLuongNhanVien();
-        System.out.println("Luong: " + tinhLuong());
+        System.out.println("Lương: " + tinhLuong());
     }
 
     @Override
     public void xuatNhanVienTheoXepLoai() {
         super.xuatNhanVienTheoXepLoai();
-        System.out.println("Loai: " + xepLoai());
+        System.out.println("Xếp loại: " + xepLoai());
     }
 }

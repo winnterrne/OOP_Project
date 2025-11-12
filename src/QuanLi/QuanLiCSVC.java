@@ -177,6 +177,7 @@ public class QuanLiCSVC extends QuanLiChung{
             System.out.println("4. Tìm cơ sở vật chất");
             System.out.println("5. Sắp xếp thứ tự cơ sở vật chất");
             System.out.println("6. Hiển thị danh sách cơ sở vật chất");
+            System.out.println("7. Kiểm tra bảo trì thiết bị ");
             System.out.println("0. Thoát");
             System.out.print("Nhập lựa chọn: ");
             choice = sc.nextInt();
@@ -247,6 +248,14 @@ public class QuanLiCSVC extends QuanLiChung{
                 case 6: //Hiển thị
                     hienThi(prefix);
                     break;
+                case 7:
+                    System.out.println("--Danh Sách Thiết Bị Cần Bảo Trì--");
+                    for (CoSoVatChat coSoVatChat : dsCoSoVatChat) {
+                        System.out.println("* " + coSoVatChat.getMaCSVC() + " : " + coSoVatChat.getLoai());
+                        coSoVatChat.baoTriThietBi();
+                        System.out.println();
+                    }
+                    break;
                 case 0:
                     System.out.println("---Thoát khỏi giao diện quản lý---");
                     break;
@@ -264,6 +273,7 @@ public class QuanLiCSVC extends QuanLiChung{
             System.out.println("File khong ton tai: ");
             return;
         }
+        dsCoSoVatChat.clear();
         try (BufferedReader br = new BufferedReader(new FileReader(f))){
             String line;
             br.readLine();
@@ -274,7 +284,7 @@ public class QuanLiCSVC extends QuanLiChung{
                 String loai = p[1].trim();
                 String tt = p[2].trim();
                 String bt = p[3].trim();
-                CoSoVatChat csvt = new CoSoVatChat(ma,loai,tt,bt);
+                CoSoVatChat csvt = new CoSoVatChat(ma,tt,bt,loai);
                 dsCoSoVatChat.add(csvt);
             }
             System.out.println("Doc File Thanh Cong: " + dsCoSoVatChat.size());

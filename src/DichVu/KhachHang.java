@@ -36,7 +36,7 @@ public class KhachHang {
     }
 
     public void xuat(){
-        System.out.println("Ma khach hang: " + this.maKH + " | Ten khach hang: " + this.tenKH + " | Dia chi: " + this.diaChi + " | So dien thoai: " + this.soDienThoai);
+        System.out.println("Mã khách hàng: " + this.maKH + " | Tên khách hàng: " + this.tenKH + " | Địa chỉ: " + this.diaChi + " | Số điện thoại: " + this.soDienThoai);
         if (hoadon != null) {
             hoadon.inHoaDon();
         } else {

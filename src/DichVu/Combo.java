@@ -77,12 +77,13 @@ public class Combo extends SanPham implements KhuyenMai{
 
     @Override
     public void xuatSanPham() {
-        System.out.println("Combo: " + luongNguoiAn + " nguoi gom: ");
+        System.out.println("Combo: " + luongNguoiAn + " người gồm: ");
         for(SanPham sp : dsSanPham) {
             System.out.println(" " + sp.getTenSanPham() + " " + sp.getGiaThanh());
         }
         double giaSauKhuyenMai = apDungKhuyenMai();
-        System.out.println("Gia Goc: " + getGiaThanh());
-        System.out.println("Gia Sau Khuyen Mai: " + giaSauKhuyenMai);
+        System.out.println("Gía Gốc: " + getGiaThanh());
+        System.out.println("Giá Sau Khuyến Mãi (nếu có): " + giaSauKhuyenMai);
+        System.out.println("-----------------------");
     }
 }

@@ -29,13 +29,13 @@ public class NhanVienDungBep extends NhanVien {
 
     @Override
     public double tinhLuong (){
-        return heSoLuong * luongCoBan;
+        return heSoLuong * luongCoBan ;
     }
 
     @Override
     public void xuatNhanVien(){
         super.xuatNhanVien();
-        System.out.println("Quay phu trach: " + getQuayPhuTrach() + " | So luong order: " + getSoLuongOrder());
+        System.out.println("Quầy phụ trách: " + getQuayPhuTrach() + " | Số Lượng Order: " + getSoLuongOrder());
     }
 
     @Override
@@ -51,12 +51,12 @@ public class NhanVienDungBep extends NhanVien {
     @Override
     public void xuatLuongNhanVien() {
         super.xuatLuongNhanVien();
-        System.out.println("Luong: " + tinhLuong());
+        System.out.println("Lương: " + tinhLuong());
     }
 
     @Override
     public void xuatNhanVienTheoXepLoai() {
         super.xuatNhanVienTheoXepLoai();
-        System.out.println("Loai: " + xepLoai());
+        System.out.println("Xếp Loại: " + xepLoai());
     }
 }

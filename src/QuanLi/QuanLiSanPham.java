@@ -23,7 +23,7 @@ public class QuanLiSanPham extends QuanLiChung {
         return tong;
     }
     public void xuatDanhSachSanPham() {
-        System.out.println("=====DanhSachSanPham=====");
+        System.out.println("=====Danh Sách Sản Phẩm=====");
         for (SanPham sp : dsSanPham) {
             sp.xuatSanPham();
         }
@@ -35,7 +35,7 @@ public class QuanLiSanPham extends QuanLiChung {
         if(obj instanceof SanPham sp){
             dsSanPham.add(sp);
             tongSoSP++;
-            System.out.println("Them thanh cong");
+            System.out.println("Thêm Thành Công ");
         }
     }
 
@@ -117,7 +117,7 @@ public class QuanLiSanPham extends QuanLiChung {
     public void docFile(String tenFile) {
         File f = new File(tenFile);
         if(!f.exists()) {
-            System.out.println("File khong ton tai" + tenFile);
+            System.out.println("File Không Tồn Tại" + tenFile);
             return;
         }
         try (BufferedReader br = new BufferedReader(new FileReader(tenFile))) {
@@ -147,7 +147,7 @@ public class QuanLiSanPham extends QuanLiChung {
                         try {
                             thucAn.loaithucan = LoaiThucAn.valueOf(t3.toUpperCase());
                         } catch (IllegalArgumentException e) {
-                            System.out.println("Gia tri cua t3 k hop le " + t3);
+                            System.out.println(" Giá trị của thuộc tính 3 không hợp lẹ " + t3);
                             thucAn.loaithucan = null;
                         }
                     }
@@ -159,9 +159,9 @@ public class QuanLiSanPham extends QuanLiChung {
 					tongSoSP++;
                 }
             }
-            System.out.println("Da Doc File Thanh Cong.");
+            System.out.println("Đã Đọc File Thành Công. ");
         }catch (Exception e) {
-            System.out.println("Loi doc ten file: " + e.getMessage());
+            System.out.println(" Lỗi Đọc Tên File : " + e.getMessage());
         }
     }
 
@@ -173,9 +173,9 @@ public class QuanLiSanPham extends QuanLiChung {
                 bw.write(sp.toCSV());
                 bw.newLine();
             }
-            System.out.println("Da Ghi Danh Sach San Pham Ra File: " + tenFile);
+            System.out.println("Đã Ghi Danh Sách Sản Phẩm Ra File: " + tenFile);
         }catch (IOException e) {
-            System.out.println("Loi ghi file " + e.getMessage());
+            System.out.println(" Lỗi Ghi File " + e.getMessage());
         }
     }
 
@@ -184,46 +184,46 @@ public class QuanLiSanPham extends QuanLiChung {
         docFile(TEN_FILE);
         int choice;
         do {
-            System.out.println("\n===== MENU QUAN LI SAN PHAM =====");
-            System.out.println("1. Them san pham");
-            System.out.println("2. Xoa san pham");
-            System.out.println("3. Sua thong tin san pham");
-            System.out.println("4. Tim kiem san pham");
-            System.out.println("5. Sap xep san pham theo ma");
-            System.out.println("6. Hien thi danh sach san pham");
-            System.out.println("0. Thoat");
-            System.out.print("Nhap lua chon: ");
+            System.out.println("\n===== MENU QUẢN LÍ SẢN PHẨM =====");
+            System.out.println("1. Thêm sản phẩm ");
+            System.out.println("2. Xóa sản phẩm ");
+            System.out.println("3. Sửa thông tin sản phẩm ");
+            System.out.println("4. Tìm kiếm sản phẩm ");
+            System.out.println("5. Sắp xếp sản phẩm theo mã ");
+            System.out.println("6. Hiển thị danh sách sản phẩm ");
+            System.out.println("0. Thoát");
+            System.out.print(" Nhập lựa chọn: ");
             choice = sc.nextInt(); sc.nextLine();
 
             switch (choice) {
                 case 1 -> {
-                    System.out.println("1. Do Uong ");
-                    System.out.println("2. Thuc An ");
+                    System.out.println("1. Đồ Uống ");
+                    System.out.println("2. Thức Ăn ");
                     System.out.println("3. Combo ");
-					System.out.print("Moi chon: ");
+					System.out.print(" Mời chọn : ");
                     int loai = Integer.parseInt(sc.nextLine());
 
-                    System.out.print("Ma San Pham: ");
+                    System.out.print("Mã Sản Phẩm : ");
                     String maSanPham = sc.nextLine();
-                    System.out.print("Ten San Pham: ");
+                    System.out.print("Tên Sản Phẩm : ");
                     String tenSanPham = sc.nextLine();
-                    System.out.print("So Luong: ");
+                    System.out.print("Số Lượng : ");
                     int soLuong = Integer.parseInt(sc.nextLine());
-                    System.out.print("Gia Thanh: ");
+                    System.out.print("Giá Thành : ");
                     double giaThanh = Double.parseDouble(sc.nextLine());
 
                     if(loai == 1) {
-                        System.out.print("Don vi tinh: ");
+                        System.out.print("Đơn Vị Tính : ");
                         String donViTinh = sc.nextLine();
-                        System.out.print("Dung tich: ");
+                        System.out.print("Dung Tích : ");
                         double dungTich = Double.parseDouble(sc.nextLine());
                         DoUong doUong = new DoUong(maSanPham, tenSanPham, soLuong, giaThanh, donViTinh, dungTich);
                         them(doUong);
                     }
                     if (loai == 2) {
-                        System.out.print("Nguyen lieu: ");
+                        System.out.print("Nguyên Liệu : ");
                         String nguyenLieu = sc.nextLine();
-                        System.out.print("Thoi gian chuan bi: ");
+                        System.out.print("Thời Gian Chuẩn Bị : ");
                         int thoiGianChuanBi = Integer.parseInt(sc.nextLine());
                         System.out.print("Loai (CHIEN / XAO / HAP/ NUONG / NAU)");
                         String l = sc.nextLine();
@@ -233,9 +233,9 @@ public class QuanLiSanPham extends QuanLiChung {
                         them(thucAn);
                     }
                     if (loai == 3) {
-                        System.out.print("So Luong Mon: ");
+                        System.out.print("Số Lượng Món : ");
                         int soLuongMon = Integer.parseInt(sc.nextLine());
-                        System.out.print("So Luong Nguoi An: ");
+                        System.out.print("Số Lượng Người Ăn : ");
                         int soLuongNguoiAn = Integer.parseInt(sc.nextLine());
                         Combo combo = new Combo();
                         combo.setMaSanPham(maSanPham);
@@ -250,19 +250,19 @@ public class QuanLiSanPham extends QuanLiChung {
 					break;
                 }
                 case 2 -> {
-                    System.out.print("Nhap Ma San Pham Can Xoa: ");
+                    System.out.print("Nhập Mã Sản Phẩm Cần Xóa : ");
                     String maSanPham = sc.nextLine();
                     xoa(maSanPham);
                     ghiFile(TEN_FILE);
 					break;
                 }
                 case 3 -> {
-					System.out.println("1. Do Uong ");
-                    System.out.println("2. Thuc An ");
+					System.out.println("1. Đồ Uống ");
+                    System.out.println("2. Thức Ăn ");
                     System.out.println("3. Combo ");
                     System.out.print("Nhập loại cần sửa");
                     int loai = Integer.parseInt(sc.nextLine());
-					System.out.print ("Nhập mã sản phẩm cần sửa: ");
+					System.out.print ("Nhập mã sản phẩm cần sửa : ");
 					String ma = sc.nextLine();
 					SanPham spSua = (SanPham) timKiem(ma);
 					if (spSua == null) {
@@ -270,11 +270,11 @@ public class QuanLiSanPham extends QuanLiChung {
 						break;
 					}
 
-					System.out.print("Tên sản phẩm: ");
+					System.out.print("Tên sản phẩm : ");
 					String tenSanPham = sc.nextLine();
-					System.out.print("Số lượng: ");
+					System.out.print("Số lượng : ");
 					int soLuong = Integer.parseInt(sc.nextLine());
-					System.out.print("Giá thành: ");
+					System.out.print("Giá thành : ");
 					double giaThanh = Double.parseDouble(sc.nextLine());
 
 					spSua.setTenSanPham(tenSanPham);
@@ -282,17 +282,17 @@ public class QuanLiSanPham extends QuanLiChung {
 					spSua.setGiaThanh(giaThanh);
 
 					if (loai == 1 && spSua instanceof DoUong) {
-						System.out.print("Đơn vị tính: ");
+						System.out.print("Đơn vị tính : ");
 						String donViTinh = sc.nextLine();
-						System.out.print("Dung tích: ");
+						System.out.print("Dung tích : ");
 						double dungTich = Double.parseDouble(sc.nextLine());
 
 						((DoUong) spSua).setDonViTinh(donViTinh);
 						((DoUong) spSua).setDungTich(dungTich);
 					} else if (loai == 2 && spSua instanceof ThucAn) {
-						System.out.print("Nguyên liệu: ");
+						System.out.print("Nguyên liệu : ");
 						String nguyenLieu = sc.nextLine();
-						System.out.print("Thời gian chuẩn bị: ");
+						System.out.print("Thời gian chuẩn bị : ");
 						int thoiGianChuanBi = Integer.parseInt(sc.nextLine());
 						System.out.print("Loại (CHIEN / XAO / HAP / NUONG / NAU): ");
 						String l = sc.nextLine();
@@ -300,9 +300,9 @@ public class QuanLiSanPham extends QuanLiChung {
 						((ThucAn) spSua).setNguyenLieu(nguyenLieu);
 						((ThucAn) spSua).setThoiGianChuanBi(thoiGianChuanBi);
 					} else if (loai == 3 && spSua instanceof Combo) {
-						System.out.print("Số lượng món: ");
+						System.out.print("Số lượng món : ");
 						int soLuongMon = Integer.parseInt(sc.nextLine());
-						System.out.print("Số lượng người ăn: ");
+						System.out.print("Số lượng người ăn : ");
 						int soLuongNguoiAn = Integer.parseInt(sc.nextLine());
 
 						((Combo) spSua).setSoLuongMon(soLuongMon);
@@ -345,7 +345,7 @@ public class QuanLiSanPham extends QuanLiChung {
 					break;
 				}
                 default -> {
-                    System.out.println("Loi ");
+                    System.out.println("Lựa Chọn Không Hợp Lệ ");
 					break;
                 }
             }

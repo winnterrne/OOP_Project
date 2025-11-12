@@ -15,13 +15,13 @@ public class Main {
 
         int choice;
         do {
-            System.out.println("=====MENU=====");
-            System.out.println("1.Quan Li San Pham");
-            System.out.println("2.Quan Li Nhan Vien");
-            System.out.println("3.Quan Li Hoa Don");
-            System.out.println("4.Quan Li TK KH");
-            System.out.println("5.Quan Li CSVT");
-            System.out.println("0.Thoat Chuong Trinh");
+            System.out.println("===============MENU===============");
+            System.out.println("1.Quản Lí Sản Phẩm");
+            System.out.println("2.Quản Lí Nhân Viên");
+            System.out.println("3.Quản Lí Hóa Đơn");
+            System.out.println("4.Quản Lí Tài Khoản Khách Hàng");
+            System.out.println("5.Quản Lí Cơ Sở Vật Chất");
+            System.out.println("0.Thoát Chương Trình");
             System.out.print("Mời chọn: ");
             choice = sc.nextInt();
             sc.nextLine();
@@ -31,8 +31,8 @@ public class Main {
                 case 3 -> quanLiHoaDon.menu();
                 case 4 -> quanLiTkKhachHang.menu();
                 case 5 -> quanLiCSVC.menu();
-                case 0 -> System.out.println("Da Thoat CHuong Trinh");
-                default -> System.out.println("Lua Chon Khong Hop Le");
+                case 0 -> System.out.println("Đã Thoát Chương Trình");
+                default -> System.out.println("Lựa Chọn Không Hợp Lệ");
             }
         }while (choice != 0);
         

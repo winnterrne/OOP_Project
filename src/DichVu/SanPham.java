@@ -44,10 +44,10 @@ abstract public class SanPham {
         return soLuong * giaThanh;
     }
     public void xuatSanPham(){
-        System.out.println("Ma San Pham: " + getMaSanPham());
-        System.out.println("Ten San Pham: " + getTenSanPham());
-        System.out.println("Gia Thanh: " + getGiaThanh());
-        System.out.println("So Luong: " + getSoLuong());
+        System.out.println("Mã Sản Phẩm: " + getMaSanPham());
+        System.out.println("Tên Sản Phẩm: " + getTenSanPham());
+        System.out.println("Giá Thành: " + getGiaThanh());
+        System.out.println("Số Lượng: " + getSoLuong());
     }
     
     public String toCSV() {

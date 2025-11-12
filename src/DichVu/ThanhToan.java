@@ -1,5 +1,5 @@
 package DichVu;
 
-interface ThanhToan {
-    String phuongThuc();
+public interface ThanhToan {
+    String getptThanhToan();
 }

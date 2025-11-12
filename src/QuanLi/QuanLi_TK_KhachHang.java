@@ -24,7 +24,7 @@ public class QuanLi_TK_KhachHang extends QuanLiChung {
     public void them(Object obj) {
         if (obj instanceof KhachHang kh) {
             dsKhachHang.add(kh);
-            System.out.println("Da them khach hang: " + kh.getTenKH());
+            System.out.println("Đã thêm khách hàng: " + kh.getTenKH());
             ghiFile(TEN_FILE);
         }
     }
@@ -43,10 +43,10 @@ public class QuanLi_TK_KhachHang extends QuanLiChung {
     public void xoa(String maKH) {
         boolean removed = dsKhachHang.removeIf(kh -> kh.getMaKH().equalsIgnoreCase(maKH));
         if (removed) {
-            System.out.println("Da xoa khach hang co ma: " + maKH);
+            System.out.println("Đã xóa khách hàng có mã: " + maKH);
             ghiFile(TEN_FILE);
         } else {
-            System.out.println("Khong tim thay khach hang can xoa!");
+            System.out.println("Không tìm thấy mã khách hàng cần xóa!");
         }
     }
 
@@ -57,12 +57,12 @@ public class QuanLi_TK_KhachHang extends QuanLiChung {
                 kh.setTenKH(khMoi.getTenKH());
                 kh.setDiaChi(khMoi.getDiaChi());
                 kh.setSoDienThoai(khMoi.getSoDienThoai());
-                System.out.println("Da sua thong tin khach hang: " + maKH);
+                System.out.println("Đã sửa thông tin khách hàng: " + maKH);
                 ghiFile(TEN_FILE);
                 return;
             }
         }
-        System.out.println("Khong tim thay ma khach hang: " + maKH);
+        System.out.println("Không tìm thấy mã khách hàng: " + maKH);
     }
 
     // ------------------ ĐỌC FILE CSV ------------------
@@ -84,7 +84,7 @@ public class QuanLi_TK_KhachHang extends QuanLiChung {
                         String maHD = arr[4].trim();
                         HoaDon hd = (HoaDon) qlhd.timKiem(maHD);
                         if (hd != null) kh.setHoadon(hd);
-                        else System.out.println("Khong tim thay hoa don voi ma: " + maHD);
+                        else System.out.println("Không tìm thấy mã hóa đơn và hóa đơn: " + maHD);
                     }
                     dsKhachHang.add(kh);
                 }
@@ -135,50 +135,50 @@ public class QuanLi_TK_KhachHang extends QuanLiChung {
         docFile(TEN_FILE);
 
         do {
-            System.out.println("\n===== QUAN LI KHACH HANG =====");
-            System.out.println("1. Them khach hang");
-            System.out.println("2. Sua khach hang");
-            System.out.println("3. Xoa khach hang");
-            System.out.println("4. Tim kiem khach hang");
-            System.out.println("5. Hien thi danh sach");
-            System.out.println("6.Gán hóa đơn cho khách hàng");
-            System.out.println("0. Thoat");
-            System.out.print("Chon chuc nang: ");
+            System.out.println("\n===== QUAN LI KHÁCH HÀNG =====");
+            System.out.println("1. Thêm thông tin khách hàng ");
+            System.out.println("2. Sửa thông tin khách hàng ");
+            System.out.println("3. Xóa thông tin khách hàng ");
+            System.out.println("4. Tìm kiếm thông tin khách hàng ");
+            System.out.println("5. Hiển thị danh sách khách hàng ");
+            System.out.println("6. Gán hóa đơn cho khách hàng ");
+            System.out.println("0. Thoát ");
+            System.out.print("Nhập lựa chọn: ");
             choice = sc.nextInt();
             sc.nextLine();
 
             switch (choice) {
                 case 1 -> {
-                    System.out.print("Nhap ma KH: ");
+                    System.out.print("Nhập mã Khách Hàng: ");
                     String ma = sc.nextLine();
-                    System.out.print("Nhap ten KH: ");
+                    System.out.print("Nhập tên Khách Hàng: ");
                     String ten = sc.nextLine();
-                    System.out.print("Nhap dia chi: ");
+                    System.out.print("Nhập địa chỉ: ");
                     String diaChi = sc.nextLine();
-                    System.out.print("Nhap so dien thoai: ");
+                    System.out.print("Nhập số điện thoại: ");
                     int sdt = sc.nextInt();
                     sc.nextLine();
                     them(new KhachHang(ma, ten, diaChi, sdt));
                 }
                 case 2 -> {
-                    System.out.print("Nhap ma KH can sua: ");
+                    System.out.print("Nhập mã khách hàng cần sửa: ");
                     String ma = sc.nextLine();
-                    System.out.print("Nhap ten moi: ");
+                    System.out.print("Nhập tên khách hàng mới: ");
                     String ten = sc.nextLine();
-                    System.out.print("Nhap dia chi moi: ");
+                    System.out.print("Nhập địa chỉ khách hàng mới: ");
                     String diaChi = sc.nextLine();
-                    System.out.print("Nhap SDT moi: ");
+                    System.out.print("Nhập SDT khách hàng mới: ");
                     int sdt = sc.nextInt();
                     sc.nextLine();
                     sua(ma, new KhachHang(ma, ten, diaChi, sdt));
                 }
                 case 3 -> {
-                    System.out.print("Nhap ma KH can xoa: ");
+                    System.out.print("Nhập mã khách hàng cần xóa: ");
                     String ma = sc.nextLine();
                     xoa(ma);
                 }
                 case 4 -> {
-                    System.out.print("Nhap ma KH can tim: ");
+                    System.out.print("Nhập mã khách hàng cần tìm ");
                     String ma = sc.nextLine();
                     KhachHang kh = timKiem(ma);
                     if (kh != null) kh.xuat();
@@ -186,19 +186,19 @@ public class QuanLi_TK_KhachHang extends QuanLiChung {
                 }
                 case 5 -> hienThi();
                 case 6 -> {
-                    System.out.print("Nhap ma KH can gan hoa don: ");
+                    System.out.print("Nhập mã khách hàng có gán hóa đơn: ");
                     String maKH = sc.nextLine().trim();
                     KhachHang kh = timKiem(maKH);
                     if (kh == null) {
                         System.out.println("Khong tim thay khach hang!");
                         break;
                     }
-                    System.out.print("Nhap ma hoa don: ");
+                    System.out.print("Nhập mã hóa đơn: ");
                     String maHD = sc.nextLine().trim();
                     HoaDon hd = (HoaDon) qlhd.timKiem(maHD);
                     if (hd != null) {
                         kh.setHoadon(hd);
-                        System.out.println("Da gan hoa don " + maHD + " cho khach hang " + maKH);
+                        System.out.println("Đã gán mã hóa đơn: " + maHD + " cho khách hàng " + maKH);
                         ghiFile(TEN_FILE);
                     } else {
                         System.out.println("Khong tim thay hoa don voi ma: " + maHD);

@@ -1,8 +1,6 @@
 package QuanLi;
 
-import DichVu.DonHang;
-import DichVu.HoaDon;
-import DichVu.SanPham;
+import DichVu.*;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -92,8 +90,16 @@ public class QuanLiHoaDon extends QuanLiChung{
 
     public void hienThi() {
         System.out.println("\n===== DANH SÁCH HÓA ĐƠN =====");
-        dsHoaDon.forEach(HoaDon::inHoaDon);
-        System.out.println("==============================");
+        for (HoaDon hd : dsHoaDon) {
+            System.out.println(hd);
+            if(!hd.getDsDonHang().isEmpty()) {
+                for (DonHang dh : hd.getDsDonHang()) {
+                    dh.xuat();
+                }
+            }
+            System.out.println("Tổng Hóa Đơn Sau Khuyến Mãi: " + hd.tongTienSauKhuyenMai());
+            System.out.println("-----------------------------------");
+        }
     }
 
 
@@ -108,14 +114,21 @@ public class QuanLiHoaDon extends QuanLiChung{
             System.out.println("4.Tìm kiếm hóa đơn");
             System.out.println("5.Sắp xếp hóa đơn");
             System.out.println("6.Hiển thị hóa đơn");
-            System.out.println("7. Thêm đơn hàng vào hóa đơn");
-            System.out.println("8. Xem doanh thu theo ngày");
+            System.out.println("7.Thêm đơn hàng vào hóa đơn");
+            System.out.println("8.Xem doanh thu theo ngày");
             System.out.println("0.Thoát");
             System.out.print("Mời chọn: ");
             choice = sc.nextInt(); sc.nextLine();
             switch (choice) {
                 case 1: //Thêm
-                    HoaDon hd = new HoaDon();
+                    System.out.println("Chọn loại hóa đơn: ");
+                    System.out.println("1. Tiền Mặt ");
+                    System.out.println("2. Chuyển Khoản ");
+                    int loai = sc.nextInt(); sc.nextLine();
+                    HoaDon hd;
+                    if(loai == 1) hd = new HoaDonTienMat();
+                    else hd = new HoaDonChuyenKhoan();
+
                     System.out.print("Nhập mã hóa đơn: ");
                     hd.setMaHoaDon(sc.nextLine().trim());
                     System.out.print("Nhập mã vận chuyển: ");
@@ -139,14 +152,20 @@ public class QuanLiHoaDon extends QuanLiChung{
                     break;
 
                 case 3: //Sửa
-                    HoaDon hdmoi = new HoaDon();
                     System.out.print("Nhập mã cần sửa: ");
                     String maSua = sc.nextLine();
+                    HoaDon hoaDon = (HoaDon) timKiem(maSua);
+                    if (hoaDon == null) {
+                        System.out.println("Không tìm thấy hóa đơn có mã " + maSua);
+                        break;
+                    }
                     System.out.print("Nhập mã vận chuyển mới: ");
-                    hdmoi.setMaVanChuyen(sc.nextLine().trim());
+                    hoaDon.setMaVanChuyen(sc.nextLine().trim());
                     System.out.print("Nhập ngày xuất hóa đơn mới: ");
-                    hdmoi.setNgayXuatHoaDon(sc.nextLine().trim());
-                    sua(maSua, hdmoi);
+                    String ngayMoi = sc.nextLine().trim();
+                    if (!ngayMoi.isEmpty()) hoaDon.setNgayXuatHoaDon(ngayMoi);
+
+                    System.out.println("Cập nhật hóa đơn thành công!");
                     ghiFile(TEN_FILE);
                     break;
 
@@ -235,30 +254,24 @@ public class QuanLiHoaDon extends QuanLiChung{
                 String mahd = p[0].trim();
                 String mavc = p[1].trim();
                 String nxhd = p[2].trim();
+                String pt = p[3].trim();
 
-                HoaDon hd = null;
-                for (HoaDon hdon : dsHoaDon){
-                    if (hdon.getMaHoaDon().equalsIgnoreCase(mahd)){
-                        hd = hdon;
-                        break;
-                    }
-                }
-                
-                if (hd == null) {
-                    hd = new HoaDon(mahd, mavc, nxhd);
-                    dsHoaDon.add(hd);
-                    tongSoHoaDon++;
-                }
-                if (p.length >= 6 && !p[3].isEmpty() && !p[4].isEmpty() && !p[5].isEmpty()) {
-                    String maDH = p[3].trim();
-                    String maSP = p[4].trim();
-                    int soLuong;
-                    try {
-                        soLuong = Integer.parseInt(p[5].trim());
-                    } catch (NumberFormatException e) {
-                        System.out.println("Số lượng không hợp lệ: " + line);
-                        continue;
-                    }
+                HoaDon hd;
+
+                if (pt.equalsIgnoreCase("Tiền Mặt")) hd = new HoaDonTienMat();
+                else if (pt.equalsIgnoreCase("Chuyển Khoản")) hd = new HoaDonChuyenKhoan();
+                else hd = new HoaDon();
+
+                hd.setMaHoaDon(mahd);
+                hd.setMaVanChuyen(mavc);
+                hd.setNgayXuatHoaDon(nxhd);
+
+
+                if (p.length >= 7 ) {
+                    String maDH = p[4].trim();
+                    String maSP = p[5].trim();
+                    int soLuong = Integer.parseInt(p[6].trim());
+
 
                     SanPham sp = null;
                     for (SanPham s : qlsp.dsSanPham){
@@ -267,14 +280,12 @@ public class QuanLiHoaDon extends QuanLiChung{
                             break;
                         }
                     }
-                    if (sp == null) {
-                        System.out.println("Không tìm thấy sản phẩm có mã: " + maSP);
-                        continue;
+                    if (sp != null) {
+                        DonHang dh = new DonHang(sp, soLuong,maDH);
+                        hd.themDonHang(dh);
                     }
-
-                    DonHang dh = new DonHang(sp, soLuong, maDH);
-                    hd.themDonHang(dh);
                 }
+                dsHoaDon.add(hd);
             }
             tongSoHoaDon = dsHoaDon.size();
             System.out.println("Doc File Thanh Cong " + dsHoaDon.size() + "Hoa Don ");
@@ -330,7 +341,7 @@ public class QuanLiHoaDon extends QuanLiChung{
                     }
                 }
                 if (hd == null) {
-                    hd = new HoaDon();
+                    hd = new HoaDonTienMat();
                     hd.setMaHoaDon(maHD);
                     hd.setMaVanChuyen("VC001"); // Giá trị mặc định
                     hd.setNgayXuatHoaDon(new SimpleDateFormat("dd/MM/yyyy").format(new Date())); // Ngày hiện tại: 10/11/2025
@@ -346,36 +357,36 @@ public class QuanLiHoaDon extends QuanLiChung{
     }
 
 
-    @Override
     public void ghiFile(String tenFile) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile))) {
-
-            bw.write("MaHD,MaVC,NgayXuat,MaDH,MaSP,SoLuong");
+            bw.write("MaHD,MaVC,NgayXuat,PT,MaDH,MaSP,SoLuong");
             bw.newLine();
 
             for (HoaDon hd : dsHoaDon) {
                 List<DonHang> dsDonHang = hd.getDsDonHang();
-                if (dsDonHang.isEmpty()){
-                    bw.write(hd.getMaHoaDon() + "," + hd.getMaVanChuyen() + "," + hd.getNgayXuatHoaDon() + ",,,");
+                String pt = (hd instanceof ThanhToan) ? ((ThanhToan) hd).getptThanhToan() : "";
+
+                if (dsDonHang.isEmpty()) {
+                    bw.write(hd.getMaHoaDon() + "," + hd.getMaVanChuyen() + "," +
+                            hd.getNgayXuatHoaDon() + "," + pt + ",,,");
                     bw.newLine();
-                }else{
-                    for (DonHang dh : dsDonHang){
+                } else {
+                    for (DonHang dh : dsDonHang) {
                         bw.write(hd.getMaHoaDon() + "," +
-                            hd.getMaVanChuyen() + "," +
-                            hd.getNgayXuatHoaDon() + "," +
-                            dh.getMaDonHang() + "," +
-                            dh.getSp().getMaSanPham() + "," +
-                            dh.getSoLuong());
+                                hd.getMaVanChuyen() + "," +
+                                hd.getNgayXuatHoaDon() + "," +
+                                pt + "," +
+                                dh.getMaDonHang() + "," +
+                                dh.getSp().getMaSanPham() + "," +
+                                dh.getSoLuong());
                         bw.newLine();
                     }
                 }
             }
 
             System.out.println("Ghi hoa don thành công!");
-
         } catch (Exception e) {
             System.out.println("Lỗi ghi file hóa đơn: " + e.getMessage());
         }
     }
-
 }
