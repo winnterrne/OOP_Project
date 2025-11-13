@@ -1,6 +1,6 @@
 Loai,Ma,Ten,SoLuong,GiaThanh,T1,T2,T3
-Combo, CB01,Combo 2 nguoi,1,100000.0,2,2
-Combo, CB02,4 nguoi,4,189000.0,4,4
+Combo, CB01,2 nguoi,2,40000.0,1,2
+Combo, CB02,4 nguoi,4,64000.0,4,4
 DoUong, DU01,Coca,10,15000.0,chai,330.0
 DoUong, DU02,Pepsi,15,14000.0,lon,500.0
 DoUong, DU03,7Up,20,13000.0,lon,500.0

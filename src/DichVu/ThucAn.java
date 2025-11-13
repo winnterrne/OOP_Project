@@ -53,6 +53,6 @@ public class ThucAn extends SanPham {
         System.out.println("----------------------------------------------------");
         super.xuatSanPham();
         System.out.println("Nguyên Liệu: " + nguyenLieu);
-        System.out.println("Thời Gian Chuẩn Bị: " + thoiGianChuanBi + " 5 phút ");
+        System.out.println("Thời Gian Chuẩn Bị: " + thoiGianChuanBi + "phút ");
     }
 }

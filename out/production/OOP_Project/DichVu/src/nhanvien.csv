@@ -1,7 +1,7 @@
 MaNV,HoTen,LoaiCongViec,CMND,SoNgayNghi,NamVaoLam,HeSoLuong,ThuocTinh1,ThuocTinh2,ThuocTinh3
-NhanVienDungBep,DBDB003,Le Van C,Dung bep,112233445,0,2018,1.8,150,Cook
-NhanVienDungBep,DBDB004,Pham Thi D,Dung bep,556677889,3,2021,1.1,200,Cook
-NhanVienDungBep,DBDB008,Tran Van H,Dung bep,223344556,0,2020,1.0,100,Burger
+NhanVienDungBep,NVDB003,Le Van C,Dung bep,112233445,0,2018,1.8,150,Cook
+NhanVienDungBep,NVDB004,Pham Thi D,Dung bep,556677889,3,2021,1.1,200,Cook
+NhanVienDungBep,NVDB008,Tran Van H,Dung bep,223344556,0,2020,1.0,100,Burger
 NhanVienBanHang,NVBH001,Nguyen Hoang A,Ban hang,123456128,1,2025,1.0,5000000.0,3000000.0
 NhanVienBanHang,NVBH002,Tran Thi B,Ban hang,987654321,1,2019,1.2,4000000.0,2500000.0
 NhanVienBanHang,NVBH003,Phan Van C,Ban hang,123456123,0,2020,1.3,4500000.0,3500000.0

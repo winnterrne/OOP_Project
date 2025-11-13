@@ -85,6 +85,7 @@ public class QuanLiNhanVien extends QuanLiChung {
         sapXepNVTheoMa();
         for (NhanVien nv : dsNhanVien) {
             nv.xuatNhanVien();
+            tongSoNhanVien++;
         }
         System.out.println("Tổng số nhân viên: " + tongSoNhanVien);
     }

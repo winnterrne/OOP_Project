@@ -14,6 +14,7 @@ public class QuanLiSanPham extends QuanLiChung {
     private Scanner sc = new Scanner(System.in);
     List<SanPham> dsSanPham =  new ArrayList<>();
     private final String TEN_FILE = "src/sanpham.csv";
+    private final String TEN_FILE_COMBO = "src/chitietcombo.csv";
 
     public double tinhGiaTriTonKho() {
         double tong = 0;
@@ -83,7 +84,7 @@ public class QuanLiSanPham extends QuanLiChung {
     }
 
     @Override
-    public Object timKiem(String maSanPham) {
+    public SanPham timKiem(String maSanPham) {
         for (SanPham sp : dsSanPham) {
             if (sp.getMaSanPham().equalsIgnoreCase(maSanPham)) return sp;
         }
@@ -165,6 +166,57 @@ public class QuanLiSanPham extends QuanLiChung {
         }
     }
 
+    public void docFileCombo(String tenFile) {
+        File f = new File(tenFile);
+        if(!f.exists()) {
+            System.out.println("File không tồn tại: ");
+            return;
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader(f))){
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String []p = line.split(",");
+                if(p.length < 3) continue;
+                String maCombo = p[0].trim();
+                String maSanPham = p[1].trim();
+                int soLuong = Integer.parseInt(p[2]);
+
+                SanPham spcombo = timKiem(maCombo);
+                SanPham spcon = timKiem(maSanPham);
+                if(spcombo instanceof Combo combo && spcon!=null) {
+                    SanPham spcopy = null;
+                    if(spcon instanceof DoUong doUong) {
+                        spcopy = new DoUong(
+                                doUong.getMaSanPham(),
+                                doUong.getTenSanPham(),
+                                doUong.getSoLuong(),
+                                doUong.getGiaThanh(),
+                                doUong.getDonViTinh(),
+                                doUong.getDungTich()
+                        ) ;
+                    } else if (spcon instanceof ThucAn ta) {
+                        ThucAn tacp = new ThucAn(
+                                ta.getMaSanPham(),
+                                ta.getTenSanPham(),
+                                ta.getSoLuong(),
+                                ta.getGiaThanh(),
+                                ta.getNguyenLieu(),
+                                ta.getThoiGianChuanBi()
+                        );
+                        spcopy = tacp;
+                    }
+                    if(spcopy!=null) {
+                        combo.themMon(spcopy);
+                    }
+                }
+            }
+            System.out.println("Đã Đọc File Chi Tiết Combo");
+        } catch (Exception e) {
+            System.out.println("Lỗi đọc file" + e.getMessage());
+        }
+    }
+
     public void ghiFile(String tenFile) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile))) {
 			bw.write("Loai,Ma,Ten,SoLuong,GiaThanh,T1,T2,T3");
@@ -182,6 +234,7 @@ public class QuanLiSanPham extends QuanLiChung {
     //========================MENU=======================
     public void menu() {
         docFile(TEN_FILE);
+        docFileCombo(TEN_FILE_COMBO);
         int choice;
         do {
             System.out.println("\n===== MENU QUẢN LÍ SẢN PHẨM =====");

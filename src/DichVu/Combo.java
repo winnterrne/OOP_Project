@@ -1,5 +1,6 @@
 package DichVu;
 
+import java.security.spec.RSAOtherPrimeInfo;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,11 @@ public class Combo extends SanPham implements KhuyenMai{
             System.out.println("Khong co mon ");
         }
     }
+    public void setDsSanPham(List<SanPham> dsSanPham) {
+        this.dsSanPham = dsSanPham;
+    }
+
+
     public double capNhatGiaThanh() {
         double tong = 0;
         for(SanPham sp : dsSanPham) {
@@ -79,7 +85,7 @@ public class Combo extends SanPham implements KhuyenMai{
     public void xuatSanPham() {
         System.out.println("Combo: " + luongNguoiAn + " người gồm: ");
         for(SanPham sp : dsSanPham) {
-            System.out.println(" " + sp.getTenSanPham() + " " + sp.getGiaThanh());
+            System.out.println("Mã Món: " + sp.getMaSanPham() + " | " + " Tên Món: " + sp.getTenSanPham());
         }
         double giaSauKhuyenMai = apDungKhuyenMai();
         System.out.println("Gía Gốc: " + getGiaThanh());
